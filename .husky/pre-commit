@@ -1,0 +1,32 @@
+# Runs type checking (always) plus security audit and build (main/staging only)
+# before allowing a commit.
+
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+echo "🛠️  Preparing to commit: Running type checking, security audit, and build"
+
+echo "🔍 Running TypeScript type checking..."
+npm run typecheck ||
+  (
+    echo '❌ TypeScript type checking failed. Please fix the type errors before committing.'
+    exit 1
+  )
+
+if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "staging" ]; then
+  echo "🔒 Running npm audit for security vulnerabilities..."
+  npm audit --audit-level=critical ||
+    (
+      echo '❌ npm audit failed. Please fix security vulnerabilities before committing.'
+      echo '💡 Run "npm audit fix" to automatically fix fixable vulnerabilities.'
+      exit 1
+    )
+
+  echo "🏗️  Running build for $BRANCH_NAME branch..."
+  npm run build ||
+    (
+      echo '❌ Build failed. Please ensure the build process completes successfully before committing.'
+      exit 1
+    )
+fi
+
+echo '✅ All pre-commit checks passed. You may now commit your changes.'

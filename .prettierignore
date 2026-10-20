@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.next/
+.agents/
+coverage/
+package-lock.json
+skills-lock.json

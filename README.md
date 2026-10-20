@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Team Transparency
 
-## Getting Started
+> A platform for transparent team management and collaboration.
 
-First, run the development server:
+Team Transparency is a web platform for managing teams where visibility and openness are the defaults — built like a real product, not a demo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Layer     | Technology                                                                                         |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| Framework | [Next.js 16](https://nextjs.org) (App Router) · React 19 · TypeScript                              |
+| UI        | [Ant Design 6](https://ant.design) with `@ant-design/nextjs-registry` for SSR styles               |
+| State     | [Zustand](https://zustand.docs.pmnd.rs)                                                            |
+| Backend   | [Supabase](https://supabase.com) — Postgres with row level security, Auth, `@supabase/ssr` clients |
+| Tooling   | ESLint · Prettier · Husky · commitlint                                                             |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install dependencies:
 
-## Learn More
+   ```sh
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Create your env file and fill in your Supabase project values:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```sh
+   cp .env.example .env.local
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   | Variable                               | Where to find it                                              |
+   | -------------------------------------- | ------------------------------------------------------------- |
+   | `NEXT_PUBLIC_SUPABASE_URL`             | Supabase Dashboard → Project Settings → API → Project URL     |
+   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase Dashboard → Project Settings → API → Publishable key |
 
-## Deploy on Vercel
+3. Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```sh
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Command             | What it does                                |
+| ------------------- | ------------------------------------------- |
+| `npm run dev`       | Start the development server                |
+| `npm run build`     | Production build                            |
+| `npm run start`     | Serve the production build                  |
+| `npm run lint`      | Run ESLint                                  |
+| `npm run format`    | Format TS/TSX files with Prettier           |
+| `npm run typecheck` | Type-check with TypeScript (`tsc --noEmit`) |
+
+## Project conventions
+
+Coding conventions — component naming and organization, code style, Supabase backend rules, Zustand and antd usage — live in [AGENTS.md](AGENTS.md).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
