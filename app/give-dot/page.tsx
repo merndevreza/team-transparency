@@ -1,5 +1,10 @@
-import { Empty } from "antd"
+import type { Metadata } from "next"
+import DotComposer from "@/components/dots/DotComposer"
+
+export const metadata: Metadata = {
+  title: "Give Dots — Team Transparency",
+}
 
 export default function GiveDotPage() {
-  return <Empty description="Give Dot (placeholder)" />
+  return <DotComposer mode="give" />
 }

@@ -1,0 +1,48 @@
+.collapse {
+  background: transparent;
+}
+
+.categoryLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display), "Caudex", serif;
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+.badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--tt-primary);
+  color: #fff;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-grid;
+  place-items: center;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--tt-border);
+}
+
+.labelRow:last-child {
+  border-bottom: none;
+}
+
+.labelName {
+  font-size: 0.92rem;
+}

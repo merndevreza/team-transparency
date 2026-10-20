@@ -1,0 +1,57 @@
+.group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--tt-border);
+  background: var(--tt-surface-strong);
+  color: var(--tt-text-secondary);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.button:hover {
+  background: var(--tt-bg-soft);
+  color: var(--tt-text);
+}
+
+.thumbs:hover {
+  color: var(--tt-primary);
+}
+
+.ok:hover {
+  color: var(--tt-ok);
+}
+
+.loop:hover {
+  color: var(--tt-loop);
+}
+
+.active {
+  color: #fff;
+}
+
+.active.thumbs {
+  background: var(--tt-primary);
+  border-color: var(--tt-primary);
+}
+
+.active.ok {
+  background: var(--tt-ok);
+  border-color: var(--tt-ok);
+}
+
+.active.loop {
+  background: var(--tt-loop);
+  border-color: var(--tt-loop);
+}

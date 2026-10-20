@@ -1,0 +1,84 @@
+.bar {
+  position: sticky;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 18px;
+  z-index: 5;
+}
+
+.selections {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.recipients {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--tt-primary);
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 8px 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--tt-border);
+}
+
+.thumbs {
+  color: var(--tt-primary);
+  background: color-mix(in srgb, var(--tt-primary) 10%, transparent);
+}
+
+.ok {
+  color: var(--tt-ok);
+  background: color-mix(in srgb, var(--tt-ok) 10%, transparent);
+}
+
+.loop {
+  color: var(--tt-loop);
+  background: color-mix(in srgb, var(--tt-loop) 12%, transparent);
+}
+
+.remove {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 9px;
+  display: grid;
+  place-items: center;
+  padding: 2px;
+}
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.count {
+  font-size: 0.8rem;
+  color: var(--tt-text-secondary);
+}
