@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Caudex, Source_Sans_3 } from "next/font/google"
 import { AntdRegistry } from "@ant-design/nextjs-registry"
-import { App as AntApp, ConfigProvider } from "antd"
+import ThemeProvider from "@/components/Theme/ThemeProvider"
 import "./globals.css"
 
 const display = Caudex({
@@ -20,16 +20,20 @@ export const metadata: Metadata = {
   description: "A platform for transparent team management and collaboration.",
 }
 
+const themeInitScript = `(function(){try{var t=localStorage.getItem("tt-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}})()`
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="en"
+      data-theme="light"
+      suppressHydrationWarning
+      className={`${display.variable} ${body.variable}`}
+    >
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <AntdRegistry>
-          <ConfigProvider
-            theme={{ token: { fontFamily: "var(--font-body), sans-serif" } }}
-          >
-            <AntApp>{children}</AntApp>
-          </ConfigProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </AntdRegistry>
       </body>
     </html>

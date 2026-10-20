@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.9] - 20-10-2026
+
+### Feat
+
+- Theme foundation: full `--tt-*` design-token system in `globals.css` (brand green primary `#4cae66`, blue/orange accents, glass utilities `.tt-glass`/`.tt-page`, sentiment accents) with a complete dark palette (`[data-theme="dark"]`, green-black surfaces).
+- Theme switching: pre-paint inline script + `ThemeProvider` (antd light/dark algorithms with per-theme token sets, pill buttons) + `useThemeStore` + `ThemeToggle`; choice persists in localStorage without hydration mismatches. Scaffold `prefers-color-scheme` overrides removed; the marketing landing stays light-locked.
+
+### Changed
+
+- Added `@ant-design/icons` as a direct dependency.
+
 ## [0.0.8] - 20-10-2026
 
 ### Changed
