@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 20-10-2026
+
+### Feat
+
+- Summary pages for About Me and About Others (`[id]`, 404 on unknown ids): header with role tag, four glass stat tiles (Caudex numbers, hydration-safe relative dates), pill tab switcher, and connector/attribute cards with the green-blue-orange sentiment trios. Shared `components/summary/*` and `components/dots/*` primitives, including a reusable glass `SectionCard`.
+
+### Fixed
+
+- Components importing `@ant-design/icons` directly (no `"use client"` directive in that package) must be client components — `SentimentDots` marked; this had crashed server rendering of the summary page.
+
 ## [0.1.1] - 20-10-2026
 
 ### Feat

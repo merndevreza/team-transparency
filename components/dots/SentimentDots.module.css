@@ -1,0 +1,30 @@
+.group {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.thumbs {
+  color: var(--tt-primary);
+}
+
+.ok {
+  color: var(--tt-ok);
+}
+
+.loop {
+  color: var(--tt-loop);
+}
+
+.muted {
+  color: var(--tt-text-secondary);
+  opacity: 0.45;
+}

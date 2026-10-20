@@ -114,16 +114,3 @@ a {
   margin-inline: auto;
   width: 100%;
 }
-
-/* Sentiment accents: thumbs_up = primary, ok = info, loop = attention */
-.tt-sentiment-thumbs_up {
-  color: var(--tt-primary);
-}
-
-.tt-sentiment-ok {
-  color: var(--tt-ok);
-}
-
-.tt-sentiment-loop {
-  color: var(--tt-loop);
-}
