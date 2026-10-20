@@ -1,17 +1,17 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Mulish, Saira } from "next/font/google"
 import { AntdRegistry } from "@ant-design/nextjs-registry"
-import { App as AntApp } from "antd"
+import { App as AntApp, ConfigProvider } from "antd"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Saira({
   subsets: ["latin"],
+  variable: "--font-display",
 })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const body = Mulish({
   subsets: ["latin"],
+  variable: "--font-body",
 })
 
 export const metadata: Metadata = {
@@ -21,10 +21,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
         <AntdRegistry>
-          <AntApp>{children}</AntApp>
+          <ConfigProvider
+            theme={{ token: { fontFamily: "var(--font-body), sans-serif" } }}
+          >
+            <AntApp>{children}</AntApp>
+          </ConfigProvider>
         </AntdRegistry>
       </body>
     </html>

@@ -10,7 +10,7 @@
   min-height: 100vh;
   overflow: clip;
   color: var(--ink);
-  font-family: var(--font-body), "Sora", sans-serif;
+  font-family: var(--font-body), sans-serif;
   background:
     radial-gradient(
       1100px 620px at 88% -8%,

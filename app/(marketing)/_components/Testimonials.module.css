@@ -30,9 +30,6 @@
 
 .title {
   font-family: var(--font-display), sans-serif;
-  font-variation-settings:
-    "opsz" 96,
-    "wdth" 100;
   font-weight: 750;
   font-size: clamp(2rem, 4.2vw, 3.1rem);
   line-height: 1.08;
