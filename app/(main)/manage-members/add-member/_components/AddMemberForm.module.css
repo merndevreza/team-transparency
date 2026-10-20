@@ -1,0 +1,11 @@
+.note {
+  font-size: 0.84rem;
+  color: var(--tt-text-secondary);
+  margin: 0 0 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

@@ -121,3 +121,8 @@ a {
   flex-direction: column;
   gap: 22px;
 }
+
+/* Narrow centered variant for form pages */
+.tt-narrow {
+  max-width: 680px;
+}

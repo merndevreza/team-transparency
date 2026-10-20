@@ -1,0 +1,23 @@
+.page {
+  gap: 18px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.search {
+  max-width: 320px;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .search {
+    margin-left: 0;
+    max-width: none;
+    flex: 1;
+  }
+}

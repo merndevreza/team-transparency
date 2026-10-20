@@ -28,7 +28,10 @@ export default function MonthlyChart({ months, direction }: MonthlyChartProps) {
     >
       {months.map((point) => {
         const isCurrent = point.month === currentMonth
-        const barHeight = Math.max(4, Math.round((point.given / max) * PLOT_HEIGHT))
+        const barHeight = Math.max(
+          4,
+          Math.round((point.given / max) * PLOT_HEIGHT)
+        )
         return (
           <Tooltip
             key={point.month}

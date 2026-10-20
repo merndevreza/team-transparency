@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - 20-10-2026
+
+### Feat
+
+- Manage members: Active/Inactive segmented tabs with search over a glass antd table (avatar, role tag, relative last login) and demo actions — make/revoke admin, activate/deactivate, delete with confirm — all mutating a new `useMembersStore`. Add-member and edit-member (now `/manage-members/edit-member/[id]`, replacing the static route) forms create and update members for real in the demo store.
+
 ## [0.1.6] - 20-10-2026
 
 ### Feat
