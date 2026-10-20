@@ -1,0 +1,16 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}

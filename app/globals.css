@@ -114,3 +114,10 @@ a {
   margin-inline: auto;
   width: 100%;
 }
+
+/* Vertical rhythm for page sections */
+.tt-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}

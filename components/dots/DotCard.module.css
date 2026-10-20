@@ -1,0 +1,63 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 22px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.who {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--tt-text-secondary);
+}
+
+.side {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tt-ok);
+}
+
+.edit:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comment {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--tt-text);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
