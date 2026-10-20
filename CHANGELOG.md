@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 20-10-2026
+
+### Fix
+
+- Large empty space below the landing footer: the decorative mesh blobs extended past `.page` (e.g. `bottom: -170px`), and `overflow-x: clip` only clipped horizontally, so they grew the document's scrollable area. `.page` now uses `overflow: clip` on both axes (still no scroll container, so the sticky nav keeps working).
+
 ## [0.0.4] - 20-10-2026
 
 ### Fix
