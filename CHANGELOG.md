@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 20-10-2026
+
+### Feat
+
+- Typed demo data layer in `lib/demo-data/` (the single swap surface for Supabase later): 12 users (incl. an admin current user and inactive members), 10 recognition categories with 42 labels, 28 dot entries spread over six months with comments/sentiments/quality, and per-user summaries, dashboard aggregates (activity, monthly series, sentiment leaders), and notifications derived deterministically from the fixtures.
+
 ## [0.0.9] - 20-10-2026
 
 ### Feat
