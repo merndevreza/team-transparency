@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 21-10-2026
+
+### Feat
+
+- Initial database schema (`supabase/migrations/0001_init.sql`): companies, profiles on `auth.users`, dot categories/labels, dots with details, and notifications; indexes on every access path. Signup trigger creates the company, admin profile, and the default 41-label taxonomy; dot inserts raise receiver notifications; a guard trigger constrains profile updates (self vs admin, immutable id/company/email); an atomic `replace_dot_details` RPC backs dot editing.
+- Row-level security on every table with company isolation: dots readable company-wide (transparency) but writable only by their giver; taxonomy admin-only; profiles self-update + admin-others; notifications recipient-only. Explicit Data API grants included (Supabase no longer auto-exposes new tables).
+- `supabase/README.md` with dashboard application steps (SQL editor, Data API exposure, confirm-email off, redirect URLs).
+
 ## [0.1.8] - 20-10-2026
 
 ### Feat
