@@ -7,14 +7,6 @@ import type {
   UserSummary,
 } from "./types"
 
-interface SummaryDotRow {
-  giver_id: string
-  receiver_id: string
-  created_at: string
-  dot_details:
-    { label_id: string; sentiment: "thumbs_up" | "ok" | "loop" }[] | null
-}
-
 interface SummaryDot {
   giverId: string
   receiverId: string
