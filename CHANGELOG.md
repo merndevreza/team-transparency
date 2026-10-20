@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.8] - 20-10-2026
+
+### Feat
+
+- Manage dots: searchable expandable category cards over a new `useTaxonomyStore` with full demo CRUD — create/rename/delete categories and labels via modal forms.
+- Login screen: glass card with logo, demo sign-in, and a forgot-password panel; reset-password screen with new/confirm fields and the shared password checklist.
+- Brand polish: antd `colorLink` tokens pinned to the brand blue in both themes.
+
+With this release every page of the app has a designed, responsive, light/dark-capable UI running on typed demo data.
+
 ## [0.1.7] - 20-10-2026
 
 ### Feat
