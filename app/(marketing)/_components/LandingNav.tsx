@@ -14,6 +14,9 @@ export default function LandingNav() {
           <Link href="#features" className={styles.link}>
             Features
           </Link>
+          <Link href="#stories" className={styles.link}>
+            Stories
+          </Link>
           <Link href="#why" className={styles.link}>
             Why openness
           </Link>

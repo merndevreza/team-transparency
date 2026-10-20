@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 20-10-2026
+
+### Feat
+
+- Testimonials section ("Stories"): three glass cards with gradient quote marks, avatar initials, roles, and received/given dot-stat pills; anchored at `#stories` and added to the landing nav.
+- Onboarding CTA rework: "Bring your company into the open." with free-messaging badge, "Onboard your company" primary action, and a no-credit-card hint.
+
 ## [0.0.5] - 20-10-2026
 
 ### Fix

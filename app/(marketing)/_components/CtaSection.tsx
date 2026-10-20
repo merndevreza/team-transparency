@@ -8,15 +8,18 @@ export default function CtaSection() {
         <span className={`${styles.spark} ${styles.sparkA}`} aria-hidden />
         <span className={`${styles.spark} ${styles.sparkB}`} aria-hidden />
         <span className={`${styles.spark} ${styles.sparkC}`} aria-hidden />
-        <h2 className={styles.title}>Work in plain sight.</h2>
+        <p className={styles.eyebrow}>Free for your whole team</p>
+        <h2 className={styles.title}>Bring your company into the open.</h2>
         <p className={styles.body}>
-          When recognition is public, trust stops being a policy and starts
-          being a habit.
+          Set up your workspace in minutes, invite your team, and start giving
+          dots — every feature, every seat, free while we grow.
         </p>
         <Link href="/login" className={styles.button}>
-          Log in
+          Onboard your company
         </Link>
-        <p className={styles.hint}>Your team is already here.</p>
+        <p className={styles.hint}>
+          Free for every seat · No credit card required
+        </p>
       </div>
     </section>
   )

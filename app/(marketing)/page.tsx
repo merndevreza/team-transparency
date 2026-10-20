@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import LandingNav from "./_components/LandingNav"
 import Hero from "./_components/Hero"
 import FeatureGrid from "./_components/FeatureGrid"
+import Testimonials from "./_components/Testimonials"
 import CtaSection from "./_components/CtaSection"
 import LandingFooter from "./_components/LandingFooter"
 import styles from "./page.module.css"
@@ -23,6 +24,7 @@ export default function LandingPage() {
       <main>
         <Hero />
         <FeatureGrid />
+        <Testimonials />
         <CtaSection />
       </main>
       <LandingFooter />
