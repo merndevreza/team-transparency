@@ -1,5 +1,10 @@
-import { Empty } from "antd"
+import type { Metadata } from "next"
+import DashboardContent from "./_components/DashboardContent"
+
+export const metadata: Metadata = {
+  title: "Dashboard — Team Transparency",
+}
 
 export default function DashboardPage() {
-  return <Empty description="Dashboard (placeholder)" />
+  return <DashboardContent />
 }

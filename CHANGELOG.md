@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 20-10-2026
+
+### Feat
+
+- Admin dashboard with Dots Given/Dots Received tabs: stat tiles, "gone quiet the longest" cards with day badges, most-recent-activity list, a dependency-free 12-month CSS bar chart (current month highlighted, antd tooltips), and top givers/receivers with sentiment trios and thumbs-up share rings. All aggregates derive from the demo dots.
+
 ## [0.1.5] - 20-10-2026
 
 ### Feat

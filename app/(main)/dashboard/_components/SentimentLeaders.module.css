@@ -1,0 +1,39 @@
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--tt-border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.who {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.total {
+  font-size: 0.78rem;
+  color: var(--tt-text-secondary);
+}
+
+.row > :global(span:last-child) {
+  margin-left: auto;
+}

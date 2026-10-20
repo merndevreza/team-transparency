@@ -1,0 +1,31 @@
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--tt-border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.text {
+  min-width: 0;
+}
+
+.line {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.text :global(span) {
+  font-size: 0.78rem;
+  color: var(--tt-text-secondary);
+}
