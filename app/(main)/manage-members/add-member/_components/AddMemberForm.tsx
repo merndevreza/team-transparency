@@ -1,26 +1,51 @@
 "use client"
 
-import { App, Button, Form, Input, Radio } from "antd"
+import { useState, useTransition } from "react"
+import { App, Button, Form, Input, Typography } from "antd"
 import { useRouter } from "next/navigation"
-import { useMembersStore } from "@/lib/store/membersStore"
+import { inviteMember } from "@/lib/actions/members"
 import styles from "./AddMemberForm.module.css"
 
-interface AddMemberFormValues {
-  name: string
+interface InviteMemberFormValues {
   email: string
-  role: "member" | "admin"
 }
 
 export default function AddMemberForm() {
   const router = useRouter()
   const { message } = App.useApp()
-  const addMember = useMembersStore((s) => s.addMember)
-  const [form] = Form.useForm<AddMemberFormValues>()
+  const [pending, startTransition] = useTransition()
+  const [signupUrl, setSignupUrl] = useState<string | null>(null)
+  const [form] = Form.useForm<InviteMemberFormValues>()
 
-  const onFinish = (values: AddMemberFormValues) => {
-    addMember(values)
-    message.success(`${values.name.trim()} added to the workspace (demo)`)
-    router.push("/manage-members")
+  const onFinish = (values: InviteMemberFormValues) => {
+    startTransition(async () => {
+      const result = await inviteMember({ email: values.email })
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      if (result.signupUrl) setSignupUrl(result.signupUrl)
+      form.resetFields()
+    })
+  }
+
+  if (signupUrl) {
+    return (
+      <div className={styles.invited}>
+        <Typography.Paragraph>
+          Send them this signup link — their email is already filled in:
+        </Typography.Paragraph>
+        <Typography.Paragraph code copyable className={styles.url}>
+          {signupUrl}
+        </Typography.Paragraph>
+        <div className={styles.actions}>
+          <Button onClick={() => setSignupUrl(null)}>Invite another</Button>
+          <Button type="primary" onClick={() => router.push("/manage-members")}>
+            Done
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -28,16 +53,8 @@ export default function AddMemberForm() {
       form={form}
       layout="vertical"
       requiredMark={false}
-      initialValues={{ role: "member" }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="name"
-        label="Full name"
-        rules={[{ required: true, message: "The name is required" }]}
-      >
-        <Input autoComplete="name" placeholder="e.g. Amara Khan" />
-      </Form.Item>
       <Form.Item
         name="email"
         label="Work email"
@@ -46,26 +63,16 @@ export default function AddMemberForm() {
           { type: "email", message: "That doesn't look like an email" },
         ]}
       >
-        <Input autoComplete="email" placeholder="name@teamtransparency.io" />
-      </Form.Item>
-      <Form.Item name="role" label="Role">
-        <Radio.Group
-          options={[
-            { label: "Member", value: "member" },
-            { label: "Admin", value: "admin" },
-          ]}
-          optionType="button"
-          buttonStyle="solid"
-        />
+        <Input autoComplete="email" placeholder="name@company.com" />
       </Form.Item>
       <p className={styles.note}>
-        In the real product this sends an invitation email — for now the member
-        is created directly with demo data.
+        They&rsquo;ll join your workspace by signing up through this link with their
+        own password. Email invitations are planned for later.
       </p>
       <div className={styles.actions}>
         <Button onClick={() => router.push("/manage-members")}>Cancel</Button>
-        <Button type="primary" htmlType="submit">
-          Add member
+        <Button type="primary" htmlType="submit" loading={pending}>
+          Create invite link
         </Button>
       </div>
     </Form>

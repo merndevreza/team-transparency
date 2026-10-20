@@ -1,48 +1,44 @@
 "use client"
 
-import { App, Button, Form, Input, Radio, Result } from "antd"
+import { useTransition } from "react"
+import { App, Button, Form, Input, Radio } from "antd"
 import { useRouter } from "next/navigation"
-import { useMembersStore } from "@/lib/store/membersStore"
+import { updateMember } from "@/lib/actions/members"
+import type { Profile } from "@/lib/data/types"
 import styles from "./EditMemberForm.module.css"
 
 interface EditMemberFormValues {
   name: string
-  email: string
-  role: "member" | "admin"
+  role: Profile["role"]
 }
 
 interface EditMemberFormProps {
-  memberId: string
+  member: Profile
+  isSelf: boolean
 }
 
-export default function EditMemberForm({ memberId }: EditMemberFormProps) {
+export default function EditMemberForm({
+  member,
+  isSelf,
+}: EditMemberFormProps) {
   const router = useRouter()
   const { message } = App.useApp()
-  const member = useMembersStore((s) =>
-    s.members.find((candidate) => candidate.id === memberId)
-  )
-  const updateMember = useMembersStore((s) => s.updateMember)
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<EditMemberFormValues>()
 
-  if (!member) {
-    return (
-      <Result
-        status="warning"
-        title="Member not found"
-        subTitle="They may have been deleted."
-        extra={
-          <Button type="primary" onClick={() => router.push("/manage-members")}>
-            Back to members
-          </Button>
-        }
-      />
-    )
-  }
-
   const onFinish = (values: EditMemberFormValues) => {
-    updateMember(memberId, values)
-    message.success(`${values.name.trim()} updated (demo)`)
-    router.push("/manage-members")
+    startTransition(async () => {
+      const result = await updateMember(member.id, {
+        name: values.name,
+        role: values.role,
+      })
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      message.success(`${values.name.trim()} updated`)
+      router.push("/manage-members")
+    })
   }
 
   return (
@@ -50,11 +46,7 @@ export default function EditMemberForm({ memberId }: EditMemberFormProps) {
       form={form}
       layout="vertical"
       requiredMark={false}
-      initialValues={{
-        name: member.name,
-        email: member.email,
-        role: member.role,
-      }}
+      initialValues={{ name: member.name, role: member.role }}
       onFinish={onFinish}
     >
       <Form.Item
@@ -64,18 +56,16 @@ export default function EditMemberForm({ memberId }: EditMemberFormProps) {
       >
         <Input autoComplete="name" />
       </Form.Item>
-      <Form.Item
-        name="email"
-        label="Work email"
-        rules={[
-          { required: true, message: "The email is required" },
-          { type: "email", message: "That doesn't look like an email" },
-        ]}
-      >
-        <Input autoComplete="email" />
+      <Form.Item label="Email">
+        <Input value={member.email} disabled />
       </Form.Item>
-      <Form.Item name="role" label="Role">
+      <Form.Item
+        name="role"
+        label="Role"
+        extra={isSelf ? "You can't change your own role." : undefined}
+      >
         <Radio.Group
+          disabled={isSelf}
           options={[
             { label: "Member", value: "member" },
             { label: "Admin", value: "admin" },
@@ -86,7 +76,7 @@ export default function EditMemberForm({ memberId }: EditMemberFormProps) {
       </Form.Item>
       <div className={styles.actions}>
         <Button onClick={() => router.push("/manage-members")}>Cancel</Button>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={pending}>
           Save changes
         </Button>
       </div>

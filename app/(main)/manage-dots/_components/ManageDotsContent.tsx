@@ -3,21 +3,27 @@
 import { useMemo, useState } from "react"
 import { App, Button, Empty, Input } from "antd"
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons"
-import { useTaxonomyStore } from "@/lib/store/taxonomyStore"
+import {
+  createCategory,
+  createLabel,
+  deleteCategory,
+  deleteLabel,
+  renameCategory,
+  renameLabel,
+} from "@/lib/actions/taxonomy"
+import type { DotCategory } from "@/lib/data/types"
 import CategoryCard from "./CategoryCard"
 import TaxonomyModals, { type TaxonomyModalState } from "./TaxonomyModals"
 import styles from "./ManageDotsContent.module.css"
 
-export default function ManageDotsContent() {
-  const { message } = App.useApp()
-  const categories = useTaxonomyStore((s) => s.categories)
-  const addCategory = useTaxonomyStore((s) => s.addCategory)
-  const renameCategory = useTaxonomyStore((s) => s.renameCategory)
-  const removeCategory = useTaxonomyStore((s) => s.removeCategory)
-  const addLabel = useTaxonomyStore((s) => s.addLabel)
-  const renameLabel = useTaxonomyStore((s) => s.renameLabel)
-  const removeLabel = useTaxonomyStore((s) => s.removeLabel)
+interface ManageDotsContentProps {
+  categories: DotCategory[]
+}
 
+export default function ManageDotsContent({
+  categories,
+}: ManageDotsContentProps) {
+  const { message } = App.useApp()
   const [query, setQuery] = useState("")
   const [modal, setModal] = useState<TaxonomyModalState | null>(null)
 
@@ -37,21 +43,37 @@ export default function ManageDotsContent() {
       )
   }, [categories, query])
 
+  const run = async (
+    action: () => Promise<{ error?: string }>,
+    successText: string
+  ) => {
+    const result = await action()
+    if (result.error) message.error(result.error)
+    else message.success(successText)
+  }
+
   const handleSubmitCategory = (name: string) => {
     if (!modal) return
-    if (modal.mode === "edit" && modal.category)
-      renameCategory(modal.category.id, name)
-    else addCategory(name)
+    if (modal.mode === "edit" && modal.category) {
+      void run(
+        () => renameCategory(modal.category!.id, name),
+        "Category renamed"
+      )
+    } else {
+      void run(() => createCategory(name), `Category “${name.trim()}” created`)
+    }
   }
 
   const handleSubmitLabel = (categoryId: string, name: string) => {
     if (!modal) return
-    if (modal.mode === "edit" && modal.label) renameLabel(modal.label.id, name)
-    else addLabel(categoryId, name)
-  }
-
-  const handleDeleteCategory = (category: { name: string }) => {
-    message.success(`Category “${category.name}” deleted (demo)`)
+    if (modal.mode === "edit" && modal.label) {
+      void run(() => renameLabel(modal.label!.id, name), "Label renamed")
+    } else {
+      void run(
+        () => createLabel(categoryId, name),
+        `Label “${name.trim()}” created`
+      )
+    }
   }
 
   return (
@@ -87,8 +109,10 @@ export default function ManageDotsContent() {
               setModal({ kind: "category", mode: "edit", category: target })
             }
             onDeleteCategory={(target) => {
-              removeCategory(target.id)
-              handleDeleteCategory(target)
+              void run(
+                () => deleteCategory(target.id),
+                `Category “${target.name}” deleted`
+              )
             }}
             onAddLabel={(categoryId) => {
               const target = categories.find((c) => c.id === categoryId)
@@ -106,8 +130,10 @@ export default function ManageDotsContent() {
                 })
             }}
             onDeleteLabel={(label) => {
-              removeLabel(label.id)
-              message.success(`Label “${label.name}” deleted (demo)`)
+              void run(
+                () => deleteLabel(label.id),
+                `Label “${label.name}” deleted`
+              )
             }}
           />
         ))}

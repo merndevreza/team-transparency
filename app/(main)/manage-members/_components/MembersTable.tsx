@@ -11,29 +11,34 @@ import {
 } from "@ant-design/icons"
 import RelativeTime from "@/components/RelativeTime/RelativeTime"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import { useMembersStore } from "@/lib/store/membersStore"
+import { removeMember, updateMember } from "@/lib/actions/members"
+import type { Profile } from "@/lib/data/types"
 import styles from "./MembersTable.module.css"
 
 interface MembersTableProps {
+  rows: Profile[]
+  currentUserId: string
   status: "active" | "inactive"
-  query: string
 }
 
-export default function MembersTable({ status, query }: MembersTableProps) {
+export default function MembersTable({
+  rows,
+  currentUserId,
+  status,
+}: MembersTableProps) {
   const { message } = App.useApp()
-  const members = useMembersStore((s) => s.members)
-  const toggleRole = useMembersStore((s) => s.toggleRole)
-  const toggleStatus = useMembersStore((s) => s.toggleStatus)
-  const removeMember = useMembersStore((s) => s.removeMember)
 
-  const rows = members.filter((member) => {
-    if (member.status !== status) return false
-    if (!query) return true
-    return (
-      member.name.toLowerCase().includes(query.toLowerCase()) ||
-      member.email.toLowerCase().includes(query.toLowerCase())
-    )
-  })
+  const runAction = async (
+    action: () => Promise<{ error?: string }>,
+    successText: string
+  ) => {
+    const result = await action()
+    if (result.error) {
+      message.error(result.error)
+      return
+    }
+    message.success(successText)
+  }
 
   return (
     <div className={`tt-glass ${styles.wrapper}`}>
@@ -49,7 +54,12 @@ export default function MembersTable({ status, query }: MembersTableProps) {
               <span className={styles.member}>
                 <UserAvatar user={member} size={36} />
                 <span className={styles.who}>
-                  <span className={styles.name}>{member.name}</span>
+                  <span className={styles.name}>
+                    {member.name}
+                    {member.id === currentUserId && (
+                      <span className={styles.youTag}> (you)</span>
+                    )}
+                  </span>
                   <span className={styles.email}>{member.email}</span>
                 </span>
               </span>
@@ -81,80 +91,115 @@ export default function MembersTable({ status, query }: MembersTableProps) {
             key: "actions",
             width: 170,
             align: "right",
-            render: (_, member) => (
-              <span className={styles.actions}>
-                <Tooltip
-                  title={
-                    member.role === "admin" ? "Revoke admin" : "Make admin"
-                  }
-                >
-                  <Button
-                    type="text"
-                    size="small"
-                    icon={<UserSwitchOutlined />}
-                    onClick={() => {
-                      toggleRole(member.id)
-                      message.success(
-                        member.role === "admin"
-                          ? `${member.name} is no longer an admin (demo)`
-                          : `${member.name} is now an admin (demo)`
-                      )
-                    }}
-                  />
-                </Tooltip>
-                <Tooltip
-                  title={status === "active" ? "Deactivate" : "Activate"}
-                >
-                  <Button
-                    type="text"
-                    size="small"
-                    icon={
-                      status === "active" ? (
-                        <PauseCircleOutlined />
-                      ) : (
-                        <PlayCircleOutlined />
-                      )
+            render: (_, member) => {
+              const isSelf = member.id === currentUserId
+              return (
+                <span className={styles.actions}>
+                  <Tooltip
+                    title={
+                      isSelf
+                        ? "You can't change your own role"
+                        : member.role === "admin"
+                          ? "Revoke admin"
+                          : "Make admin"
                     }
-                    onClick={() => {
-                      toggleStatus(member.id)
-                      message.success(
-                        status === "active"
-                          ? `${member.name} deactivated (demo)`
-                          : `${member.name} activated (demo)`
-                      )
-                    }}
-                  />
-                </Tooltip>
-                <Tooltip title="Edit">
-                  <Link
-                    href={`/manage-members/edit-member/${member.id}`}
-                    aria-label={`Edit ${member.name}`}
                   >
-                    <Button type="text" size="small" icon={<EditOutlined />} />
-                  </Link>
-                </Tooltip>
-                <Popconfirm
-                  title={`Delete ${member.name}?`}
-                  description="This cannot be undone."
-                  okText="Delete"
-                  okButtonProps={{ danger: true }}
-                  onConfirm={() => {
-                    removeMember(member.id)
-                    message.success(`${member.name} deleted (demo)`)
-                  }}
-                >
-                  <Tooltip title="Delete">
                     <Button
                       type="text"
                       size="small"
-                      danger
-                      icon={<DeleteOutlined />}
-                      aria-label={`Delete ${member.name}`}
+                      disabled={isSelf}
+                      icon={<UserSwitchOutlined />}
+                      aria-label={`Toggle admin for ${member.name}`}
+                      onClick={() =>
+                        runAction(
+                          () =>
+                            updateMember(member.id, {
+                              role:
+                                member.role === "admin" ? "member" : "admin",
+                            }),
+                          member.role === "admin"
+                            ? `${member.name} is no longer an admin`
+                            : `${member.name} is now an admin`
+                        )
+                      }
                     />
                   </Tooltip>
-                </Popconfirm>
-              </span>
-            ),
+                  <Tooltip
+                    title={
+                      isSelf
+                        ? "You can't deactivate yourself"
+                        : status === "active"
+                          ? "Deactivate"
+                          : "Activate"
+                    }
+                  >
+                    <Button
+                      type="text"
+                      size="small"
+                      disabled={isSelf}
+                      icon={
+                        status === "active" ? (
+                          <PauseCircleOutlined />
+                        ) : (
+                          <PlayCircleOutlined />
+                        )
+                      }
+                      aria-label={`Toggle status for ${member.name}`}
+                      onClick={() =>
+                        runAction(
+                          () =>
+                            updateMember(member.id, {
+                              status:
+                                status === "active" ? "inactive" : "active",
+                            }),
+                          status === "active"
+                            ? `${member.name} deactivated`
+                            : `${member.name} activated`
+                        )
+                      }
+                    />
+                  </Tooltip>
+                  <Tooltip title="Edit">
+                    <Link
+                      href={`/manage-members/edit-member/${member.id}`}
+                      aria-label={`Edit ${member.name}`}
+                    >
+                      <Button
+                        type="text"
+                        size="small"
+                        icon={<EditOutlined />}
+                      />
+                    </Link>
+                  </Tooltip>
+                  <Popconfirm
+                    title={`Delete ${member.name}?`}
+                    description="This cannot be undone."
+                    okText="Delete"
+                    okButtonProps={{ danger: true }}
+                    disabled={isSelf}
+                    onConfirm={() =>
+                      runAction(
+                        () => removeMember(member.id),
+                        `${member.name} deleted`
+                      )
+                    }
+                  >
+                    <Tooltip
+                      title={isSelf ? "You can't delete yourself" : "Delete"}
+                    >
+                      <Button
+                        type="text"
+                        size="small"
+                        danger
+                        disabled={isSelf}
+                        icon={<DeleteOutlined />}
+                        aria-label={`Delete ${member.name}`}
+                      />
+                    </Tooltip>
+                  </Popconfirm>
+                </span>
+              )
+            },
           },
         ]}
       />
