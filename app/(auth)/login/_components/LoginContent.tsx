@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useState } from "react"
 import { Button } from "antd"
 import Logo from "@/components/Logo/Logo"
@@ -7,7 +8,11 @@ import LoginForm from "./LoginForm"
 import ForgotPasswordPanel from "./ForgotPasswordPanel"
 import styles from "./LoginContent.module.css"
 
-export default function LoginContent() {
+interface LoginContentProps {
+  next: string
+}
+
+export default function LoginContent({ next }: LoginContentProps) {
   const [showForgot, setShowForgot] = useState(false)
 
   return (
@@ -27,14 +32,17 @@ export default function LoginContent() {
         <ForgotPasswordPanel onBack={() => setShowForgot(false)} />
       ) : (
         <>
-          <LoginForm />
+          <LoginForm next={next} />
           <Button type="link" block onClick={() => setShowForgot(true)}>
             Forgot password?
           </Button>
         </>
       )}
       <p className={styles.hint}>
-        Demo mode — any valid email and password works.
+        New here?{" "}
+        <Link href="/register" className={styles.link}>
+          Onboard your company
+        </Link>
       </p>
     </div>
   )

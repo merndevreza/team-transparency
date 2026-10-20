@@ -1,6 +1,6 @@
 "use client"
 
-import { App, Button, Collapse, Popconfirm } from "antd"
+import { Button, Collapse, Popconfirm } from "antd"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import type { DotCategory, DotLabel } from "@/lib/demo-data/types"
 import styles from "./CategoryCard.module.css"

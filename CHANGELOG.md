@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 21-10-2026
+
+### Feat
+
+- Live auth: server actions for company sign-up (creates company + admin via the signup trigger), sign-in (with `next` redirect support and `last_login_at` stamping), password-reset request/confirm, and sign-out. `/register` onboards a company in one glass-card step (`?email=` prefill for invites).
+- Route protection in the proxy: public paths are `/`, `/login`, `/register`, `/reset-password`, `/auth/*`; everything else bounces to `/login?next=…` and signed-in users are redirected away from the auth pages (refreshed cookies carried across redirects).
+- App shell runs on the real session: the main layout loads the profile (redirecting when signed out) and notifications; user menu signs out for real; the bell lists live notifications with mark-all-read; `/auth/confirm` exchanges email-link tokens.
+- Landing CTAs ("Get started", "Onboard your company", hero primary) now lead to `/register`; login gained a register link and lost its demo hint.
+
 ## [0.2.0] - 21-10-2026
 
 ### Feat

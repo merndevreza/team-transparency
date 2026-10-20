@@ -15,7 +15,7 @@ export default function Hero() {
           doors.
         </p>
         <div className={`${styles.actions} ${styles.r4}`}>
-          <Link href="/login" className={styles.primary}>
+          <Link href="/register" className={styles.primary}>
             Log in
           </Link>
           <a href="#features" className={styles.secondary}>

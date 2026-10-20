@@ -1,11 +1,11 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Button, message } from "antd"
+import { Button } from "antd"
 import { LogoutOutlined, PlusOutlined } from "@ant-design/icons"
 import Logo from "@/components/Logo/Logo"
 import ThemeToggle from "@/components/Theme/ThemeToggle"
+import { signOut } from "@/lib/actions/auth"
 import NavList from "./NavList"
 import styles from "./Sidebar.module.css"
 
@@ -14,14 +14,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ onNavigate }: SidebarProps) {
-  const router = useRouter()
-
-  const signOut = () => {
-    message.success("Signed out (demo)")
-    onNavigate?.()
-    router.push("/login")
-  }
-
   return (
     <div className={styles.sidebar}>
       <div className={styles.brand}>
@@ -39,7 +31,9 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
         <Button
           type="text"
           icon={<LogoutOutlined />}
-          onClick={signOut}
+          onClick={() => {
+            void signOut()
+          }}
           className={styles.signOut}
         >
           Sign out

@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Log in — Team Transparency",
 }
 
-export default function LoginPage() {
-  return <LoginContent />
+export default async function LoginPage(props: PageProps<"/login">) {
+  const rawNext = await props.searchParams
+  const next = Array.isArray(rawNext.next) ? rawNext.next[0] : rawNext.next
+
+  return <LoginContent next={next ?? ""} />
 }

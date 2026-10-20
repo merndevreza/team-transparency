@@ -14,7 +14,7 @@ export default function CtaSection() {
           Set up your workspace in minutes, invite your team, and start giving
           dots — every feature, every seat, free while we grow.
         </p>
-        <Link href="/login" className={styles.button}>
+        <Link href="/register" className={styles.button}>
           Onboard your company
         </Link>
         <p className={styles.hint}>

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"
 import { Button } from "antd"
 import { MenuOutlined } from "@ant-design/icons"
+import type { NotificationItem, Profile } from "@/lib/data/types"
 import NotificationsBell from "./NotificationsBell"
 import UserMenu from "./UserMenu"
 import styles from "./Topbar.module.css"
@@ -21,10 +22,16 @@ const titleFor = (pathname: string): string =>
   "Team Transparency"
 
 interface TopbarProps {
+  profile: Profile
+  notifications: NotificationItem[]
   onMenu: () => void
 }
 
-export default function Topbar({ onMenu }: TopbarProps) {
+export default function Topbar({
+  profile,
+  notifications,
+  onMenu,
+}: TopbarProps) {
   const pathname = usePathname()
 
   return (
@@ -40,8 +47,8 @@ export default function Topbar({ onMenu }: TopbarProps) {
         <h1 className={styles.title}>{titleFor(pathname)}</h1>
       </div>
       <div className={styles.right}>
-        <NotificationsBell />
-        <UserMenu />
+        <NotificationsBell items={notifications} />
+        <UserMenu profile={profile} />
       </div>
     </header>
   )

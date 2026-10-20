@@ -1,6 +1,8 @@
 "use client"
 
+import { useTransition } from "react"
 import { App, Button, Form, Input } from "antd"
+import { requestPasswordReset } from "@/lib/actions/auth"
 
 interface ForgotPasswordPanelValues {
   email: string
@@ -14,11 +16,19 @@ export default function ForgotPasswordPanel({
   onBack,
 }: ForgotPasswordPanelProps) {
   const { message } = App.useApp()
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<ForgotPasswordPanelValues>()
 
   const onFinish = (values: ForgotPasswordPanelValues) => {
-    message.success(`Reset link sent to ${values.email} (demo)`)
-    onBack()
+    startTransition(async () => {
+      const result = await requestPasswordReset(values.email)
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      message.success("If that email exists, a reset link is on its way")
+      onBack()
+    })
   }
 
   return (
@@ -36,9 +46,9 @@ export default function ForgotPasswordPanel({
           { type: "email", message: "That doesn't look like an email" },
         ]}
       >
-        <Input autoComplete="email" placeholder="name@teamtransparency.io" />
+        <Input autoComplete="email" placeholder="name@company.com" />
       </Form.Item>
-      <Button type="primary" htmlType="submit" block>
+      <Button type="primary" htmlType="submit" block loading={pending}>
         Send reset link
       </Button>
       <Button type="link" block onClick={onBack}>

@@ -1,21 +1,35 @@
 "use client"
 
+import { useTransition } from "react"
 import { App, Button, Form, Input } from "antd"
-import { useRouter } from "next/navigation"
+import { signIn } from "@/lib/actions/auth"
 
 interface LoginFormValues {
   email: string
   password: string
 }
 
-export default function LoginForm() {
-  const router = useRouter()
+interface LoginFormProps {
+  next: string
+}
+
+export default function LoginForm({ next }: LoginFormProps) {
   const { message } = App.useApp()
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<LoginFormValues>()
 
   const onFinish = (values: LoginFormValues) => {
-    message.success(`Welcome back, ${values.email} (demo)`)
-    router.push("/dashboard")
+    startTransition(async () => {
+      const result = await signIn({
+        email: values.email,
+        password: values.password,
+        next,
+      })
+      if (result.error) {
+        message.error(result.error)
+      }
+      // On success the action redirects — this line is never reached.
+    })
   }
 
   return (
@@ -33,7 +47,7 @@ export default function LoginForm() {
           { type: "email", message: "That doesn't look like an email" },
         ]}
       >
-        <Input autoComplete="email" placeholder="name@teamtransparency.io" />
+        <Input autoComplete="email" placeholder="name@company.com" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -45,7 +59,7 @@ export default function LoginForm() {
           placeholder="••••••••"
         />
       </Form.Item>
-      <Button type="primary" htmlType="submit" block>
+      <Button type="primary" htmlType="submit" block loading={pending}>
         Log in
       </Button>
     </Form>

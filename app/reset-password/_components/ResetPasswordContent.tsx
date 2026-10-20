@@ -1,8 +1,9 @@
 "use client"
 
+import { useTransition } from "react"
 import { App, Button, Form, Input } from "antd"
-import Link from "next/link"
 import PasswordChecklist from "@/components/account/PasswordChecklist"
+import { resetPassword } from "@/lib/actions/auth"
 import styles from "./ResetPasswordContent.module.css"
 
 interface ResetPasswordFormValues {
@@ -12,18 +13,25 @@ interface ResetPasswordFormValues {
 
 export default function ResetPasswordContent() {
   const { message } = App.useApp()
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<ResetPasswordFormValues>()
   const newPassword = Form.useWatch("newPassword", form) ?? ""
 
-  const onFinish = () => {
-    message.success("Password reset (demo) — you can log in now")
+  const onFinish = (values: ResetPasswordFormValues) => {
+    startTransition(async () => {
+      const result = await resetPassword(values.newPassword)
+      if (result.error) {
+        message.error(result.error)
+      }
+      // On success the action redirects — this line is never reached.
+    })
   }
 
   return (
     <div className={`tt-glass ${styles.card}`}>
       <h1 className={styles.title}>Set a new password</h1>
       <p className={styles.subtitle}>
-        Choose something strong — your team will never see it, but you'll need
+        Choose something strong — your team will never see it, but you&rsquo;ll need
         it every day.
       </p>
       <Form
@@ -56,11 +64,8 @@ export default function ResetPasswordContent() {
           <Input.Password autoComplete="new-password" />
         </Form.Item>
         <PasswordChecklist password={newPassword} />
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block loading={pending}>
           Reset password
-        </Button>
-        <Button type="link" block>
-          <Link href="/login">Back to log in</Link>
         </Button>
       </Form>
     </div>

@@ -1,21 +1,19 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Dropdown, message } from "antd"
+import { Dropdown } from "antd"
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import { getCurrentUser } from "@/lib/demo-data/current-user"
+import { signOut } from "@/lib/actions/auth"
+import type { Profile } from "@/lib/data/types"
 import styles from "./UserMenu.module.css"
 
-export default function UserMenu() {
+interface UserMenuProps {
+  profile: Profile
+}
+
+export default function UserMenu({ profile }: UserMenuProps) {
   const router = useRouter()
-  const user = getCurrentUser()
-
-  const signOut = () => {
-    message.success("Signed out (demo)")
-    router.push("/login")
-  }
-
   return (
     <Dropdown
       menu={{
@@ -31,7 +29,9 @@ export default function UserMenu() {
             key: "signout",
             icon: <LogoutOutlined />,
             label: "Sign out",
-            onClick: signOut,
+            onClick: () => {
+              void signOut()
+            },
           },
         ],
       }}
@@ -43,7 +43,7 @@ export default function UserMenu() {
         className={styles.trigger}
         aria-label="Account menu"
       >
-        <UserAvatar user={user} size={30} />
+        <UserAvatar user={profile} size={30} />
       </button>
     </Dropdown>
   )

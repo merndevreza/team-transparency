@@ -2,11 +2,22 @@
 
 import { useState, type ReactNode } from "react"
 import { Drawer } from "antd"
+import type { NotificationItem, Profile } from "@/lib/data/types"
 import Sidebar from "./Sidebar"
 import Topbar from "./Topbar"
 import styles from "./AppShell.module.css"
 
-export default function AppShell({ children }: { children: ReactNode }) {
+interface AppShellProps {
+  profile: Profile
+  notifications: NotificationItem[]
+  children: ReactNode
+}
+
+export default function AppShell({
+  profile,
+  notifications,
+  children,
+}: AppShellProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const closeDrawer = () => setDrawerOpen(false)
 
@@ -16,7 +27,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <Sidebar />
       </aside>
       <div className={styles.mainColumn}>
-        <Topbar onMenu={() => setDrawerOpen(true)} />
+        <Topbar
+          profile={profile}
+          notifications={notifications}
+          onMenu={() => setDrawerOpen(true)}
+        />
         <main className={styles.content}>{children}</main>
       </div>
       <Drawer

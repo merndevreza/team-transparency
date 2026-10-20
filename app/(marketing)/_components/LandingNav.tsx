@@ -25,7 +25,7 @@ export default function LandingNav() {
           <Link href="/login" className={styles.login}>
             Log in
           </Link>
-          <Link href="/login" className={styles.cta}>
+          <Link href="/register" className={styles.cta}>
             Get started
           </Link>
         </div>
