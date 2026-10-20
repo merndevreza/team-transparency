@@ -5,6 +5,20 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/about-me",
+        destination: "/about-me/summary",
+        permanent: true,
+      },
+      {
+        source: "/about-others/:id",
+        destination: "/about-others/:id/summary",
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
