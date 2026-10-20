@@ -1,15 +1,16 @@
 import type { Metadata } from "next"
-import { Mulish, Saira } from "next/font/google"
+import { Caudex, Source_Sans_3 } from "next/font/google"
 import { AntdRegistry } from "@ant-design/nextjs-registry"
 import { App as AntApp, ConfigProvider } from "antd"
 import "./globals.css"
 
-const display = Saira({
+const display = Caudex({
   subsets: ["latin"],
+  weight: ["400", "700"],
   variable: "--font-display",
 })
 
-const body = Mulish({
+const body = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-body",
 })

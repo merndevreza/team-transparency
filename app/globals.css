@@ -20,7 +20,7 @@ body {
   flex-direction: column;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-body), "Mulish", sans-serif;
+  font-family: var(--font-body), "Source Sans 3", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -31,7 +31,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-display), "Saira", sans-serif;
+  font-family: var(--font-display), "Caudex", serif;
 }
 
 * {

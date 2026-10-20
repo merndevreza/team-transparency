@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.8] - 20-10-2026
+
+### Changed
+
+- Typography: headings switched to **Caudex** (user's choice — old-style serif), body to **Source Sans 3** (humanist sans that harmonizes with Caudex's serifs). Landing title weights normalized to 700 since Caudex ships only 400/700.
+
 ## [0.0.7] - 20-10-2026
 
 ### Changed
