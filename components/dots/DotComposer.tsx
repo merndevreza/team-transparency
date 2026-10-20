@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { Button, message } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
 import type { DotCategory, DotEntry, DotLabel, Profile } from "@/lib/data/types"
 import { useGiveDotStore } from "@/lib/store/giveDotStore"
+import { editDot, giveDots } from "@/lib/actions/dots"
 import CategoryAccordion from "./CategoryAccordion"
 import ComposerBar from "./ComposerBar"
 import RecipientsPanel from "./RecipientsPanel"
@@ -36,6 +37,7 @@ export default function DotComposer({
   const isSubmitted = useGiveDotStore((s) => s.isSubmitted)
   const reset = useGiveDotStore((s) => s.reset)
   const loadEntry = useGiveDotStore((s) => s.loadEntry)
+  const [pending, startTransition] = useTransition()
 
   useEffect(() => {
     if (mode === "edit" && entry) {
@@ -49,8 +51,26 @@ export default function DotComposer({
   }, [mode, entry, loadEntry, reset])
 
   const handleSubmit = () => {
-    submit()
-    message.success(mode === "give" ? "Dots sent (demo)" : "Dot updated (demo)")
+    startTransition(async () => {
+      const selections = useGiveDotStore.getState().selections
+      const comment = useGiveDotStore.getState().comment
+      const result =
+        mode === "give"
+          ? await giveDots({
+              recipientIds: useGiveDotStore.getState().recipientIds,
+              selections,
+              comment,
+            })
+          : entry
+            ? await editDot({ dotId: entry.id, selections, comment })
+            : { error: "Nothing to edit" }
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      message.success(mode === "give" ? "Dots delivered" : "Dot updated")
+      submit()
+    })
   }
 
   return (
@@ -98,6 +118,7 @@ export default function DotComposer({
       {!isSubmitted && (
         <ComposerBar
           onSubmit={handleSubmit}
+          pending={pending}
           submitLabel={mode === "edit" ? "Save changes" : undefined}
           users={users}
           labels={labels}

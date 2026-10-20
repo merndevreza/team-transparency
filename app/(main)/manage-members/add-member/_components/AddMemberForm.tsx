@@ -66,8 +66,8 @@ export default function AddMemberForm() {
         <Input autoComplete="email" placeholder="name@company.com" />
       </Form.Item>
       <p className={styles.note}>
-        They&rsquo;ll join your workspace by signing up through this link with their
-        own password. Email invitations are planned for later.
+        They&rsquo;ll join your workspace by signing up through this link with
+        their own password. Email invitations are planned for later.
       </p>
       <div className={styles.actions}>
         <Button onClick={() => router.push("/manage-members")}>Cancel</Button>

@@ -1,6 +1,8 @@
 "use client"
 
+import { useTransition } from "react"
 import { App, Button, Form, Input } from "antd"
+import { updateName } from "@/lib/actions/profile"
 
 interface EditNameFormValues {
   name: string
@@ -12,11 +14,18 @@ interface EditNameFormProps {
 
 export default function EditNameForm({ currentName }: EditNameFormProps) {
   const { message } = App.useApp()
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<EditNameFormValues>()
 
   const onFinish = (values: EditNameFormValues) => {
-    message.success(`Name updated to “${values.name.trim()}” (demo)`)
-    form.resetFields()
+    startTransition(async () => {
+      const result = await updateName(values.name)
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      message.success("Name updated")
+    })
   }
 
   return (
@@ -37,7 +46,7 @@ export default function EditNameForm({ currentName }: EditNameFormProps) {
       >
         <Input autoComplete="name" />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
+      <Button type="primary" htmlType="submit" loading={pending}>
         Save name
       </Button>
     </Form>

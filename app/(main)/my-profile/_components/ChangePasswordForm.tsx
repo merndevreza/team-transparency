@@ -1,6 +1,8 @@
 "use client"
 
+import { useTransition } from "react"
 import { App, Button, Form, Input } from "antd"
+import { updatePassword } from "@/lib/actions/profile"
 import PasswordChecklist from "@/components/account/PasswordChecklist"
 import styles from "./ChangePasswordForm.module.css"
 
@@ -12,12 +14,23 @@ interface ChangePasswordFormValues {
 
 export default function ChangePasswordForm() {
   const { message } = App.useApp()
+  const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<ChangePasswordFormValues>()
   const newPassword = Form.useWatch("newPassword", form) ?? ""
 
-  const onFinish = () => {
-    message.success("Password updated (demo)")
-    form.resetFields()
+  const onFinish = (values: ChangePasswordFormValues) => {
+    startTransition(async () => {
+      const result = await updatePassword({
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      })
+      if (result.error) {
+        message.error(result.error)
+        return
+      }
+      message.success("Password updated")
+      form.resetFields()
+    })
   }
 
   return (
@@ -60,7 +73,7 @@ export default function ChangePasswordForm() {
       <PasswordChecklist password={newPassword} />
       <div className={styles.actions}>
         <Button onClick={() => form.resetFields()}>Cancel</Button>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={pending}>
           Update password
         </Button>
       </div>

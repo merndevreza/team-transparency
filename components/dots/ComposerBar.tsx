@@ -10,6 +10,7 @@ import styles from "./ComposerBar.module.css"
 interface ComposerBarProps {
   onSubmit: () => void
   submitLabel?: string
+  pending?: boolean
   users: Record<string, Profile>
   labels: Record<string, DotLabel>
 }
@@ -23,6 +24,7 @@ const CHIP_TONES = {
 export default function ComposerBar({
   onSubmit,
   submitLabel,
+  pending = false,
   users,
   labels,
 }: ComposerBarProps) {
@@ -82,7 +84,12 @@ export default function ComposerBar({
         />
         <div className={styles.actions}>
           <span className={styles.count}>{wordCount} words</span>
-          <Button type="primary" disabled={!isValid} onClick={onSubmit}>
+          <Button
+            type="primary"
+            disabled={!isValid}
+            loading={pending}
+            onClick={onSubmit}
+          >
             {submitLabel ??
               (Object.keys(selections).length > 1 ? "Give Dots" : "Give Dot")}
           </Button>
