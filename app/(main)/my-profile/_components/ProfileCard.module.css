@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  flex-wrap: wrap;
+}
+
+.info {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.email {
+  margin: 4px 0 0;
+  color: var(--tt-text-secondary);
+  font-size: 0.92rem;
+}
+
+.badges {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.joined {
+  font-size: 0.8rem;
+  color: var(--tt-text-secondary);
+}

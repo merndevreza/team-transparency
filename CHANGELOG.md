@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 20-10-2026
+
+### Feat
+
+- About Others directory: live search (name/email) over a responsive grid of glass person cards with received/given counts and dimmed inactive members.
+- My profile: profile card (role tag, member-since), display-name form, and change-password form with a live shared `PasswordChecklist` (≥8 chars, cases, digit, special).
+
 ## [0.1.4] - 20-10-2026
 
 ### Feat
