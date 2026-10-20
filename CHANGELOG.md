@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 20-10-2026
+
+### Feat
+
+- Dot composer for `/give-dot` and `/edit-dot/[id]` (shell-less routes): searchable recipients panel, category accordion with per-label green/blue/orange sentiment toggles and selected-count badges, a sticky composer bar with removable selection chips and a word-counted comment, and a success screen. State lives in `useGiveDotStore`; edit mode prefills from the dot and locks the recipient.
+
 ## [0.1.3] - 20-10-2026
 
 ### Feat
