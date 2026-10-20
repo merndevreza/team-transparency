@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 20-10-2026
+
+### Fix
+
+- Double scrollbar: removed `max-width: 100vw` + `overflow-x: hidden` from `html`/`body` in `globals.css` — setting `overflow-x: hidden` on both made each a scroll container. Horizontal overflow is already handled per-page (`.page` uses `overflow-x: clip`).
+
 ## [0.0.3] - 20-10-2026
 
 ### Feat
