@@ -1,0 +1,58 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  padding: 20px 16px;
+}
+
+.brand {
+  padding-inline: 8px;
+}
+
+.giveButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: var(--tt-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--tt-primary) 70%, transparent);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.giveButton:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  color: #fff;
+}
+
+.giveButton:focus-visible {
+  outline: 2px solid var(--tt-ok);
+  outline-offset: 2px;
+}
+
+.navArea {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--tt-border);
+}
+
+.signOut {
+  justify-content: flex-start;
+  color: var(--tt-text-secondary);
+}

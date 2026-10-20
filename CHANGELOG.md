@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 20-10-2026
+
+### Feat
+
+- App shell: glass sidebar (logo, prominent Give Dot action, pill nav with active state from the pathname, theme toggle + sign out) and a sticky glass topbar (page title, notifications popover with unread badge, user menu). Collapses to a hamburger + Drawer below 1000px; replaces the placeholder antd Menu layout.
+- Shared primitives: deterministic initials `UserAvatar` and hydration-safe `RelativeTime` (`useSyncExternalStore`, absolute on the server, relative after hydration).
+
+### Changed
+
+- antd 6 Drawer: custom width now passed via `size` (width is deprecated).
+
 ## [0.1.0] - 20-10-2026
 
 ### Feat
