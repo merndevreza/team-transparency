@@ -1,10 +1,10 @@
 import { Tag } from "antd"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import type { AppUser } from "@/lib/demo-data/types"
+import type { Profile } from "@/lib/data/types"
 import styles from "./SummaryHeader.module.css"
 
 interface SummaryHeaderProps {
-  user: AppUser
+  user: Profile
 }
 
 export default function SummaryHeader({ user }: SummaryHeaderProps) {

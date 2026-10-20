@@ -2,9 +2,10 @@ import AttributeChip from "@/components/dots/AttributeChip"
 import SentimentDots from "@/components/dots/SentimentDots"
 import type {
   AttributeSummary,
+  DotLabel,
   Sentiment,
   SentimentCounts,
-} from "@/lib/demo-data/types"
+} from "@/lib/data/types"
 import styles from "./AttributeConnectorList.module.css"
 
 const dominantSentiment = (counts: SentimentCounts): Sentiment => {
@@ -15,10 +16,12 @@ const dominantSentiment = (counts: SentimentCounts): Sentiment => {
 
 interface AttributeConnectorListProps {
   attributes: AttributeSummary[]
+  labels: Record<string, DotLabel>
 }
 
 export default function AttributeConnectorList({
   attributes,
+  labels,
 }: AttributeConnectorListProps) {
   if (attributes.length === 0) {
     return <p className={styles.empty}>No dots yet.</p>
@@ -29,7 +32,7 @@ export default function AttributeConnectorList({
       {attributes.map((attribute) => (
         <li key={attribute.labelId} className={styles.row}>
           <AttributeChip
-            labelId={attribute.labelId}
+            name={labels[attribute.labelId]?.name ?? "Unknown attribute"}
             sentiment={dominantSentiment(attribute.sentiments)}
           />
           <SentimentDots counts={attribute.sentiments} />

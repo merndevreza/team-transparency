@@ -1,7 +1,7 @@
 "use client"
 
 import { Tooltip } from "antd"
-import type { MonthlyPoint } from "@/lib/demo-data/types"
+import type { MonthlyPoint } from "@/lib/data/types"
 import styles from "./MonthlyChart.module.css"
 
 interface MonthlyChartProps {

@@ -1,7 +1,7 @@
 "use client"
 
 import { App, Form, Input, Modal } from "antd"
-import type { DotCategory, DotLabel } from "@/lib/demo-data/types"
+import type { DotCategory, DotLabel } from "@/lib/data/types"
 
 export interface TaxonomyModalState {
   kind: "category" | "label"

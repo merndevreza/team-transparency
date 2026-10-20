@@ -61,3 +61,8 @@ export const listProfiles = async (): Promise<Profile[]> => {
 
   return data.map(mapProfile)
 }
+
+export const listProfilesAsMap = async (): Promise<Record<string, Profile>> => {
+  const profiles = await listProfiles()
+  return Object.fromEntries(profiles.map((profile) => [profile.id, profile]))
+}

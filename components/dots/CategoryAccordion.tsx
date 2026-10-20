@@ -1,15 +1,20 @@
 "use client"
 
 import { Collapse } from "antd"
-import { listCategories } from "@/lib/demo-data/dot-taxonomy"
+import type { DotCategory } from "@/lib/data/types"
 import { useGiveDotStore } from "@/lib/store/giveDotStore"
 import SentimentToggle from "./SentimentToggle"
 import styles from "./CategoryAccordion.module.css"
 
-export default function CategoryAccordion() {
+interface CategoryAccordionProps {
+  categories: DotCategory[]
+}
+
+export default function CategoryAccordion({
+  categories,
+}: CategoryAccordionProps) {
   const selections = useGiveDotStore((s) => s.selections)
   const setSelection = useGiveDotStore((s) => s.setSelection)
-  const categories = listCategories()
 
   const items = categories.map((category) => {
     const selectedCount = category.labels.filter(

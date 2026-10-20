@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 import { LikeOutlined, SmileOutlined, SyncOutlined } from "@ant-design/icons"
-import type { Sentiment } from "@/lib/demo-data/types"
+import type { Sentiment } from "@/lib/data/types"
 import styles from "./SentimentToggle.module.css"
 
 const OPTIONS: { value: Sentiment; icon: ReactNode }[] = [

@@ -1,23 +1,24 @@
 import { Progress, Tooltip } from "antd"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
 import SentimentDots from "@/components/dots/SentimentDots"
-import { getUserById } from "@/lib/demo-data/users"
-import type { DashboardSide } from "@/lib/demo-data/types"
+import type { DashboardSide, Profile } from "@/lib/data/types"
 import styles from "./SentimentLeaders.module.css"
 
 interface SentimentLeadersProps {
   leaders: DashboardSide["leaders"]
   direction: "given" | "received"
+  users: Record<string, Profile>
 }
 
 export default function SentimentLeaders({
   leaders,
   direction,
+  users,
 }: SentimentLeadersProps) {
   return (
     <ul className={styles.list}>
       {leaders.map((leader) => {
-        const user = getUserById(leader.userId)
+        const user = users[leader.userId]
         if (!user) return null
         const thumbsShare = leader.total
           ? Math.round((leader.sentiments.thumbsUp / leader.total) * 100)

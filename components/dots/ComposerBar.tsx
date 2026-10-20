@@ -3,14 +3,15 @@
 import { useMemo } from "react"
 import { Button, Input } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
-import { getLabelById } from "@/lib/demo-data/dot-taxonomy"
-import { getUserById } from "@/lib/demo-data/users"
+import type { DotLabel, Profile } from "@/lib/data/types"
 import { useGiveDotStore } from "@/lib/store/giveDotStore"
 import styles from "./ComposerBar.module.css"
 
 interface ComposerBarProps {
   onSubmit: () => void
   submitLabel?: string
+  users: Record<string, Profile>
+  labels: Record<string, DotLabel>
 }
 
 const CHIP_TONES = {
@@ -22,6 +23,8 @@ const CHIP_TONES = {
 export default function ComposerBar({
   onSubmit,
   submitLabel,
+  users,
+  labels,
 }: ComposerBarProps) {
   const recipientIds = useGiveDotStore((s) => s.recipientIds)
   const selections = useGiveDotStore((s) => s.selections)
@@ -38,7 +41,7 @@ export default function ComposerBar({
     recipientIds.length === 0
       ? "No recipients"
       : recipientIds.length === 1
-        ? (getUserById(recipientIds[0])?.name ?? "1 recipient")
+        ? (users[recipientIds[0]]?.name ?? "1 recipient")
         : `${recipientIds.length} recipients`
 
   const isValid =
@@ -56,7 +59,7 @@ export default function ComposerBar({
               key={labelId}
               className={`${styles.chip} ${CHIP_TONES[sentiment]}`}
             >
-              {getLabelById(labelId)?.name ?? labelId}
+              {labels[labelId]?.name ?? labelId}
               <button
                 type="button"
                 className={styles.remove}

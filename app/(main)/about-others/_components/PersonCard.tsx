@@ -1,18 +1,16 @@
 import Link from "next/link"
 import { Tag } from "antd"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import { getGivenDots, getReceivedDots } from "@/lib/demo-data/dots"
-import type { AppUser } from "@/lib/demo-data/types"
+import type { Profile } from "@/lib/data/types"
 import styles from "./PersonCard.module.css"
 
 interface PersonCardProps {
-  user: AppUser
+  user: Profile
+  received: number
+  given: number
 }
 
-export default function PersonCard({ user }: PersonCardProps) {
-  const received = getReceivedDots(user.id).length
-  const given = getGivenDots(user.id).length
-
+export default function PersonCard({ user, received, given }: PersonCardProps) {
   return (
     <Link
       href={`/about-others/${user.id}/summary`}

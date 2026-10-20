@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button, message } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
-import type { DotEntry } from "@/lib/demo-data/types"
+import type { DotCategory, DotEntry, DotLabel, Profile } from "@/lib/data/types"
 import { useGiveDotStore } from "@/lib/store/giveDotStore"
 import CategoryAccordion from "./CategoryAccordion"
 import ComposerBar from "./ComposerBar"
@@ -15,9 +15,22 @@ import styles from "./DotComposer.module.css"
 interface DotComposerProps {
   mode: "give" | "edit"
   entry?: DotEntry
+  currentUserId: string
+  recipients: Profile[]
+  categories: DotCategory[]
+  labels: Record<string, DotLabel>
+  users: Record<string, Profile>
 }
 
-export default function DotComposer({ mode, entry }: DotComposerProps) {
+export default function DotComposer({
+  mode,
+  entry,
+  currentUserId,
+  recipients,
+  categories,
+  labels,
+  users,
+}: DotComposerProps) {
   const router = useRouter()
   const submit = useGiveDotStore((s) => s.submit)
   const isSubmitted = useGiveDotStore((s) => s.isSubmitted)
@@ -71,9 +84,13 @@ export default function DotComposer({ mode, entry }: DotComposerProps) {
         />
       ) : (
         <div className={styles.layout}>
-          <RecipientsPanel disabled={mode === "edit"} />
+          <RecipientsPanel
+            candidates={recipients}
+            currentUserId={currentUserId}
+            disabled={mode === "edit"}
+          />
           <div className={`tt-glass ${styles.categories}`}>
-            <CategoryAccordion />
+            <CategoryAccordion categories={categories} />
           </div>
         </div>
       )}
@@ -82,6 +99,8 @@ export default function DotComposer({ mode, entry }: DotComposerProps) {
         <ComposerBar
           onSubmit={handleSubmit}
           submitLabel={mode === "edit" ? "Save changes" : undefined}
+          users={users}
+          labels={labels}
         />
       )}
     </div>

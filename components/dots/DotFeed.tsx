@@ -2,8 +2,7 @@
 
 import { useState } from "react"
 import { Empty, Pagination } from "antd"
-import { getUserById } from "@/lib/demo-data/users"
-import type { DotEntry } from "@/lib/demo-data/types"
+import type { DotEntry, DotLabel, Profile } from "@/lib/data/types"
 import DotCard from "./DotCard"
 import styles from "./DotFeed.module.css"
 
@@ -14,6 +13,8 @@ interface DotFeedProps {
   direction: "received" | "given"
   showEdit?: boolean
   showQuality?: boolean
+  users: Record<string, Profile>
+  labels: Record<string, DotLabel>
 }
 
 export default function DotFeed({
@@ -21,6 +22,8 @@ export default function DotFeed({
   direction,
   showEdit = false,
   showQuality = false,
+  users,
+  labels,
 }: DotFeedProps) {
   const [page, setPage] = useState(1)
 
@@ -37,7 +40,7 @@ export default function DotFeed({
         {visible.map((entry) => {
           const counterpartId =
             direction === "received" ? entry.giverId : entry.receiverId
-          const counterpart = getUserById(counterpartId)
+          const counterpart = users[counterpartId]
           if (!counterpart) return null
           return (
             <DotCard
@@ -46,6 +49,7 @@ export default function DotFeed({
               counterpart={counterpart}
               showEdit={showEdit}
               showQuality={showQuality}
+              labels={labels}
             />
           )
         })}

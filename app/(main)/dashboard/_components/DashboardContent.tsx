@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Segmented } from "antd"
 import SectionCard from "@/components/summary/SectionCard"
-import { getDashboardData } from "@/lib/demo-data/dashboard"
+import type { DashboardData, Profile } from "@/lib/data/types"
 import DashboardStats from "./DashboardStats"
 import InactiveMembers from "./InactiveMembers"
 import MonthlyChart from "./MonthlyChart"
@@ -13,9 +13,17 @@ import styles from "./DashboardContent.module.css"
 
 type Direction = "given" | "received"
 
-export default function DashboardContent() {
+interface DashboardContentProps {
+  data: DashboardData
+  users: Record<string, Profile>
+}
+
+export default function DashboardContent({
+  data,
+  users,
+}: DashboardContentProps) {
   const [direction, setDirection] = useState<Direction>("given")
-  const data = getDashboardData()[direction]
+  const side = data[direction]
 
   return (
     <div className={`tt-page tt-stack ${styles.page}`}>
@@ -27,7 +35,7 @@ export default function DashboardContent() {
           { label: "Dots Received", value: "received" },
         ]}
       />
-      <DashboardStats stats={data.stats} direction={direction} />
+      <DashboardStats stats={side.stats} direction={direction} />
       <div className={styles.grid}>
         <SectionCard
           title={
@@ -36,19 +44,31 @@ export default function DashboardContent() {
               : "Waiting the longest to be recognized"
           }
         >
-          <InactiveMembers rows={data.longestSilent} direction={direction} />
+          <InactiveMembers
+            rows={side.longestSilent}
+            direction={direction}
+            users={users}
+          />
         </SectionCard>
         <SectionCard title="Most recent activity">
-          <RecentActivity rows={data.mostRecent} direction={direction} />
+          <RecentActivity
+            rows={side.mostRecent}
+            direction={direction}
+            users={users}
+          />
         </SectionCard>
       </div>
       <SectionCard title={`Dots per month — last 12 months`}>
-        <MonthlyChart months={data.monthly} direction={direction} />
+        <MonthlyChart months={side.monthly} direction={direction} />
       </SectionCard>
       <SectionCard
         title={direction === "given" ? "Top givers" : "Top receivers"}
       >
-        <SentimentLeaders leaders={data.leaders} direction={direction} />
+        <SentimentLeaders
+          leaders={side.leaders}
+          direction={direction}
+          users={users}
+        />
       </SectionCard>
     </div>
   )

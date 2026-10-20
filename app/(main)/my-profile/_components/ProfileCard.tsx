@@ -1,10 +1,10 @@
 import { Tag } from "antd"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import type { AppUser } from "@/lib/demo-data/types"
+import type { Profile } from "@/lib/data/types"
 import styles from "./ProfileCard.module.css"
 
 interface ProfileCardProps {
-  user: AppUser
+  user: Profile
 }
 
 export default function ProfileCard({ user }: ProfileCardProps) {

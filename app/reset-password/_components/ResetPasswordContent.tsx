@@ -31,8 +31,8 @@ export default function ResetPasswordContent() {
     <div className={`tt-glass ${styles.card}`}>
       <h1 className={styles.title}>Set a new password</h1>
       <p className={styles.subtitle}>
-        Choose something strong — your team will never see it, but you&rsquo;ll need
-        it every day.
+        Choose something strong — your team will never see it, but you&rsquo;ll
+        need it every day.
       </p>
       <Form
         form={form}

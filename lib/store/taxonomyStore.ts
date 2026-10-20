@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { categories } from "@/lib/demo-data/dot-taxonomy"
-import type { DotCategory } from "@/lib/demo-data/types"
+import type { DotCategory } from "@/lib/data/types"
 
 interface TaxonomyState {
   categories: DotCategory[]

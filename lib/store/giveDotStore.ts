@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import type { DotEntryDetail, Sentiment } from "@/lib/demo-data/types"
+import type { DotEntryDetail, Sentiment } from "@/lib/data/types"
 
 interface GiveDotState {
   recipientIds: string[]

@@ -1,16 +1,18 @@
 import Link from "next/link"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
 import SentimentDots from "@/components/dots/SentimentDots"
-import { getUserById } from "@/lib/demo-data/users"
-import type { ConnectorSummary } from "@/lib/demo-data/types"
+import type { Profile } from "@/lib/data/types"
+import type { ConnectorSummary } from "@/lib/data/types"
 import styles from "./PersonConnectorList.module.css"
 
 interface PersonConnectorListProps {
   connectors: ConnectorSummary[]
+  users: Record<string, Profile>
 }
 
 export default function PersonConnectorList({
   connectors,
+  users,
 }: PersonConnectorListProps) {
   if (connectors.length === 0) {
     return <p className={styles.empty}>No dots yet.</p>
@@ -19,7 +21,7 @@ export default function PersonConnectorList({
   return (
     <ul className={styles.list}>
       {connectors.map((connector) => {
-        const user = getUserById(connector.userId)
+        const user = users[connector.userId]
         if (!user) return null
         return (
           <li key={connector.userId} className={styles.row}>

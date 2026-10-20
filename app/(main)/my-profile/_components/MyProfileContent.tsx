@@ -1,20 +1,22 @@
 "use client"
 
 import SectionCard from "@/components/summary/SectionCard"
-import { getCurrentUser } from "@/lib/demo-data/current-user"
+import type { Profile } from "@/lib/data/types"
 import ProfileCard from "./ProfileCard"
 import EditNameForm from "./EditNameForm"
 import ChangePasswordForm from "./ChangePasswordForm"
 import styles from "./MyProfileContent.module.css"
 
-export default function MyProfileContent() {
-  const user = getCurrentUser()
+interface MyProfileContentProps {
+  profile: Profile
+}
 
+export default function MyProfileContent({ profile }: MyProfileContentProps) {
   return (
     <div className={`tt-page tt-stack ${styles.page}`}>
-      <ProfileCard user={user} />
+      <ProfileCard user={profile} />
       <SectionCard title="Display name">
-        <EditNameForm currentName={user.name} />
+        <EditNameForm currentName={profile.name} />
       </SectionCard>
       <SectionCard title="Change password">
         <ChangePasswordForm />

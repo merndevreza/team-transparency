@@ -3,27 +3,40 @@
 import { useMemo, useState } from "react"
 import { Empty, Input } from "antd"
 import { SearchOutlined } from "@ant-design/icons"
-import { CURRENT_USER_ID } from "@/lib/demo-data/current-user"
-import { listUsers } from "@/lib/demo-data/users"
+import type { Profile } from "@/lib/data/types"
 import PersonCard from "./PersonCard"
 import styles from "./DirectoryContent.module.css"
 
-export default function DirectoryContent() {
+interface DirectoryEntry {
+  user: Profile
+  received: number
+  given: number
+}
+
+interface DirectoryContentProps {
+  currentUserId: string
+  entries: DirectoryEntry[]
+}
+
+export default function DirectoryContent({
+  currentUserId,
+  entries,
+}: DirectoryContentProps) {
   const [query, setQuery] = useState("")
 
   const people = useMemo(
     () =>
-      listUsers()
-        .filter((user) => user.id !== CURRENT_USER_ID)
-        .filter((user) => {
+      entries
+        .filter((entry) => entry.user.id !== currentUserId)
+        .filter((entry) => {
           const q = query.trim().toLowerCase()
           if (!q) return true
           return (
-            user.name.toLowerCase().includes(q) ||
-            user.email.toLowerCase().includes(q)
+            entry.user.name.toLowerCase().includes(q) ||
+            entry.user.email.toLowerCase().includes(q)
           )
         }),
-    [query]
+    [entries, currentUserId, query]
   )
 
   return (
@@ -45,8 +58,13 @@ export default function DirectoryContent() {
         <Empty description="Nobody matches that search" />
       ) : (
         <div className={styles.grid}>
-          {people.map((user) => (
-            <PersonCard key={user.id} user={user} />
+          {people.map((entry) => (
+            <PersonCard
+              key={entry.user.id}
+              user={entry.user}
+              received={entry.received}
+              given={entry.given}
+            />
           ))}
         </div>
       )}

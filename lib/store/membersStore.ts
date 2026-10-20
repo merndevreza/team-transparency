@@ -1,9 +1,9 @@
 import { create } from "zustand"
 import { users } from "@/lib/demo-data/users"
-import type { AppUser, UserRole } from "@/lib/demo-data/types"
+import type { Profile, UserRole } from "@/lib/data/types"
 
 interface MembersState {
-  members: AppUser[]
+  members: Profile[]
   addMember: (payload: { name: string; email: string; role: UserRole }) => void
   updateMember: (
     id: string,

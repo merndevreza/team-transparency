@@ -1,22 +1,23 @@
 import RelativeTime from "@/components/RelativeTime/RelativeTime"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import { getUserById } from "@/lib/demo-data/users"
-import type { DashboardSide } from "@/lib/demo-data/types"
+import type { DashboardSide, Profile } from "@/lib/data/types"
 import styles from "./RecentActivity.module.css"
 
 interface RecentActivityProps {
   rows: DashboardSide["mostRecent"]
   direction: "given" | "received"
+  users: Record<string, Profile>
 }
 
 export default function RecentActivity({
   rows,
   direction,
+  users,
 }: RecentActivityProps) {
   return (
     <ul className={styles.list}>
       {rows.map((row) => {
-        const user = getUserById(row.userId)
+        const user = users[row.userId]
         if (!user) return null
         return (
           <li key={row.userId} className={styles.row}>

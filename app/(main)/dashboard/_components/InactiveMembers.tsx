@@ -1,21 +1,22 @@
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
-import { getUserById } from "@/lib/demo-data/users"
-import type { DashboardSide } from "@/lib/demo-data/types"
+import type { DashboardSide, Profile } from "@/lib/data/types"
 import styles from "./InactiveMembers.module.css"
 
 interface InactiveMembersProps {
   rows: DashboardSide["longestSilent"]
   direction: "given" | "received"
+  users: Record<string, Profile>
 }
 
 export default function InactiveMembers({
   rows,
   direction,
+  users,
 }: InactiveMembersProps) {
   return (
     <ul className={styles.list}>
       {rows.map((row) => {
-        const user = getUserById(row.userId)
+        const user = users[row.userId]
         if (!user) return null
         const concerning = row.daysSince > 30
         return (

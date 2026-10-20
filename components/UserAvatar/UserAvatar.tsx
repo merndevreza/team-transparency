@@ -1,5 +1,5 @@
 import { Avatar } from "antd"
-import type { AppUser } from "@/lib/demo-data/types"
+import type { Profile } from "@/lib/data/types"
 
 const AVATAR_TONES = [
   "linear-gradient(135deg, #4cae66, #2f7f45)",
@@ -22,7 +22,7 @@ const initialsOf = (name: string): string =>
     .join("")
 
 interface UserAvatarProps {
-  user: AppUser
+  user: Profile
   size?: number
 }
 

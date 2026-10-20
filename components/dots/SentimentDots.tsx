@@ -1,7 +1,7 @@
 "use client"
 
 import { LikeOutlined, SmileOutlined, SyncOutlined } from "@ant-design/icons"
-import type { SentimentCounts } from "@/lib/demo-data/types"
+import type { SentimentCounts } from "@/lib/data/types"
 import styles from "./SentimentDots.module.css"
 
 interface SentimentDotsProps {

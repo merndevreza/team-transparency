@@ -1,4 +1,4 @@
-import type { DashboardSide } from "@/lib/demo-data/types"
+import type { DashboardSide } from "@/lib/data/types"
 import styles from "./DashboardStats.module.css"
 
 interface DashboardStatsProps {

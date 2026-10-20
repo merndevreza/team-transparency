@@ -1,22 +1,16 @@
-import { getLabelById } from "@/lib/demo-data/dot-taxonomy"
-import type { Sentiment } from "@/lib/demo-data/types"
+import type { Sentiment } from "@/lib/data/types"
 import styles from "./AttributeChip.module.css"
 
 interface AttributeChipProps {
-  labelId: string
+  name: string
   sentiment: Sentiment
 }
 
-export default function AttributeChip({
-  labelId,
-  sentiment,
-}: AttributeChipProps) {
-  const label = getLabelById(labelId)
-
+export default function AttributeChip({ name, sentiment }: AttributeChipProps) {
   return (
     <span className={`${styles.chip} ${styles[sentiment]}`}>
       <span className={styles.dot} aria-hidden />
-      {label?.name ?? "Unknown attribute"}
+      {name}
     </span>
   )
 }

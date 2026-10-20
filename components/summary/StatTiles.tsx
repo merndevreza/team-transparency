@@ -1,5 +1,5 @@
 import RelativeTime from "@/components/RelativeTime/RelativeTime"
-import type { UserSummary } from "@/lib/demo-data/types"
+import type { UserSummary } from "@/lib/data/types"
 import styles from "./StatTiles.module.css"
 
 interface StatTilesProps {

@@ -4,14 +4,15 @@ import RelativeTime from "@/components/RelativeTime/RelativeTime"
 import UserAvatar from "@/components/UserAvatar/UserAvatar"
 import AttributeChip from "./AttributeChip"
 import SentimentDots from "./SentimentDots"
-import type { AppUser, DotEntry } from "@/lib/demo-data/types"
+import type { DotEntry, DotLabel, Profile } from "@/lib/data/types"
 import styles from "./DotCard.module.css"
 
 interface DotCardProps {
   entry: DotEntry
-  counterpart: AppUser
+  counterpart: Profile
   showEdit?: boolean
   showQuality?: boolean
+  labels: Record<string, DotLabel>
 }
 
 export default function DotCard({
@@ -19,6 +20,7 @@ export default function DotCard({
   counterpart,
   showEdit = false,
   showQuality = false,
+  labels,
 }: DotCardProps) {
   return (
     <article className={`tt-glass ${styles.card}`}>
@@ -47,7 +49,7 @@ export default function DotCard({
         {entry.details.map((detail, index) => (
           <AttributeChip
             key={`${detail.labelId}-${index}`}
-            labelId={detail.labelId}
+            name={labels[detail.labelId]?.name ?? "Unknown attribute"}
             sentiment={detail.sentiment}
           />
         ))}
