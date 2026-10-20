@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - 20-10-2026
+
+### Feat
+
+- Landing page at `/` ((marketing) route group): Glass & Light design — frosted-glass hero with a live product preview card, feature grid, closing CTA, and footer; brand dot-molecule motif, green/orange/blue gradient mesh, grain overlay, and CSS-only staggered load/float animations with reduced-motion support. Fonts: Bricolage Grotesque (display) + Sora (body), loaded in the marketing layout.
+- Login moved from `/` to `/login`; `(auth)` layout now scopes the login route.
+
+### Changed
+
+- `Logo`/`LogoSVG`: cleaned dead styles, added `size` prop, `aria-hidden` on the mark.
+
 ## [0.0.2] - 20-10-2026
 
 ### Feat
