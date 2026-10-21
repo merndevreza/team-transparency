@@ -7,7 +7,7 @@ export default function LandingNav() {
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main">
         <div className={styles.brand}>
-          <Logo size={30} />
+          <Logo size={60} />
           <span className={styles.wordmark}>Team Transparency</span>
         </div>
         <div className={styles.links}>

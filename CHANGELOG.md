@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.6] - 21-10-2026
+
+### Feat
+
+- Landing footer rebuilt with useful content: brand block (logo, tagline, contact email), Product links (Features, Stories, Why openness anchors), Account links (Log in, Create a workspace, Give a dot), and a bottom bar with a dynamic copyright year and a "Built with Next.js & Supabase" credit.
+
 ## [0.2.5] - 21-10-2026
 
 ### Feat
