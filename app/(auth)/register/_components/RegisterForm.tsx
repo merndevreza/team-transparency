@@ -16,9 +16,15 @@ interface RegisterFormValues {
 
 interface RegisterFormProps {
   defaultEmail: string
+  inviteToken: string
+  invited: boolean
 }
 
-export default function RegisterForm({ defaultEmail }: RegisterFormProps) {
+export default function RegisterForm({
+  defaultEmail,
+  inviteToken,
+  invited,
+}: RegisterFormProps) {
   const { message } = App.useApp()
   const [pending, startTransition] = useTransition()
   const [form] = Form.useForm<RegisterFormValues>()
@@ -27,10 +33,11 @@ export default function RegisterForm({ defaultEmail }: RegisterFormProps) {
   const onFinish = (values: RegisterFormValues) => {
     startTransition(async () => {
       const result = await signUpCompany({
-        companyName: values.companyName,
+        companyName: invited ? undefined : values.companyName,
         fullName: values.fullName,
         email: values.email,
         password: values.password,
+        inviteToken: inviteToken || undefined,
       })
       if (result.error) {
         message.error(result.error)
@@ -47,13 +54,15 @@ export default function RegisterForm({ defaultEmail }: RegisterFormProps) {
       initialValues={{ email: defaultEmail }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="companyName"
-        label="Company name"
-        rules={[{ required: true, message: "Your company name is required" }]}
-      >
-        <Input autoComplete="organization" placeholder="e.g. Brightloop" />
-      </Form.Item>
+      {!invited && (
+        <Form.Item
+          name="companyName"
+          label="Company name"
+          rules={[{ required: true, message: "Your company name is required" }]}
+        >
+          <Input autoComplete="organization" placeholder="e.g. Brightloop" />
+        </Form.Item>
+      )}
       <Form.Item
         name="fullName"
         label="Your full name"

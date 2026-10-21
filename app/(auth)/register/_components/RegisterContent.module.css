@@ -40,3 +40,7 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+.alert {
+  margin-bottom: 14px;
+}

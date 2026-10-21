@@ -62,14 +62,23 @@ export const removeMember = async (memberId: string): Promise<MemberResult> => {
 }
 
 // Creating auth users needs the service-role key, so admins share a signup
-// link instead. A real invite-email flow is future work (Edge Function).
+// link instead — registering through it joins the admin's company. A real
+// invite-email flow is future work (Edge Function).
 export const inviteMember = async (input: {
   email: string
+  role: UserRole
 }): Promise<MemberResult> => {
   const resolved = await resolveClient()
   if ("error" in resolved) return { error: resolved.error }
 
   const email = input.email.trim().toLowerCase()
+  const { data: profile } = await resolved.supabase
+    .from("profiles")
+    .select("company_id")
+    .eq("id", resolved.userId)
+    .single()
+  if (!profile) return { error: "Your profile could not be found" }
+
   const { data: existing } = await resolved.supabase
     .from("profiles")
     .select("id")
@@ -78,6 +87,19 @@ export const inviteMember = async (input: {
   if (existing)
     return { error: "Someone with this email is already in the workspace" }
 
+  const { data: invite, error: inviteError } = await resolved.supabase
+    .from("invites")
+    .upsert(
+      { company_id: profile.company_id, email, role: input.role },
+      { onConflict: "company_id,email" }
+    )
+    .select("token")
+    .single()
+  if (inviteError || !invite)
+    return { error: inviteError?.message ?? "Could not create the invite" }
+
   const origin = (await headers()).get("origin") ?? "http://localhost:3000"
-  return { signupUrl: `${origin}/register?email=${encodeURIComponent(email)}` }
+  return {
+    signupUrl: `${origin}/register?invite=${invite.token}&email=${encodeURIComponent(email)}`,
+  }
 }

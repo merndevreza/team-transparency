@@ -15,16 +15,19 @@ const safeNext = (next?: string): string =>
   next && /^\/(?!\/)/.test(next) ? next : "/dashboard"
 
 export const signUpCompany = async (input: {
-  companyName: string
+  companyName?: string
   fullName: string
   email: string
   password: string
+  inviteToken?: string
 }): Promise<AuthResult> => {
-  const companyName = input.companyName.trim()
   const fullName = input.fullName.trim()
   const email = input.email.trim().toLowerCase()
+  const companyName = input.companyName?.trim() ?? ""
+  const inviteToken = input.inviteToken?.trim()
 
-  if (!companyName) return { error: "Your company name is required" }
+  if (!inviteToken && !companyName)
+    return { error: "Your company name is required" }
   if (!fullName) return { error: "Your name is required" }
   if (!EMAIL_PATTERN.test(email))
     return { error: "Enter a valid email address" }
@@ -36,7 +39,11 @@ export const signUpCompany = async (input: {
     email,
     password: input.password,
     options: {
-      data: { company_name: companyName, full_name: fullName },
+      data: {
+        company_name: companyName,
+        full_name: fullName,
+        ...(inviteToken ? { invite_token: inviteToken } : {}),
+      },
     },
   })
 

@@ -24,7 +24,7 @@ export default function AppShell({
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebarColumn}>
-        <Sidebar />
+        <Sidebar role={profile.role} />
       </aside>
       <div className={styles.mainColumn}>
         <Topbar
@@ -42,7 +42,7 @@ export default function AppShell({
         styles={{ body: { padding: 0 } }}
         closeIcon={null}
       >
-        <Sidebar onNavigate={closeDrawer} />
+        <Sidebar onNavigate={closeDrawer} role={profile.role} />
       </Drawer>
     </div>
   )

@@ -1,13 +1,14 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { App, Button, Form, Input, Typography } from "antd"
+import { App, Button, Form, Input, Radio, Typography } from "antd"
 import { useRouter } from "next/navigation"
 import { inviteMember } from "@/lib/actions/members"
 import styles from "./AddMemberForm.module.css"
 
 interface InviteMemberFormValues {
   email: string
+  role: "member" | "admin"
 }
 
 export default function AddMemberForm() {
@@ -19,7 +20,10 @@ export default function AddMemberForm() {
 
   const onFinish = (values: InviteMemberFormValues) => {
     startTransition(async () => {
-      const result = await inviteMember({ email: values.email })
+      const result = await inviteMember({
+        email: values.email,
+        role: values.role,
+      })
       if (result.error) {
         message.error(result.error)
         return
@@ -64,6 +68,16 @@ export default function AddMemberForm() {
         ]}
       >
         <Input autoComplete="email" placeholder="name@company.com" />
+      </Form.Item>
+      <Form.Item name="role" label="Role" initialValue="member">
+        <Radio.Group
+          options={[
+            { label: "Member", value: "member" },
+            { label: "Admin", value: "admin" },
+          ]}
+          optionType="button"
+          buttonStyle="solid"
+        />
       </Form.Item>
       <p className={styles.note}>
         They&rsquo;ll join your workspace by signing up through this link with
