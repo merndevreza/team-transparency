@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button, Input, Segmented } from "antd"
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons"
+import { LinkOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons"
 import type { Profile } from "@/lib/data/types"
 import MembersTable from "./MembersTable"
 import styles from "./MembersContent.module.css"
@@ -62,11 +62,17 @@ export default function MembersContent({
           className={styles.search}
         />
         <Button
-          type="primary"
-          icon={<PlusOutlined />}
+          icon={<LinkOutlined />}
           onClick={() => router.push("/manage-members/add-member")}
         >
           Invite member
+        </Button>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => router.push("/manage-members/create-member")}
+        >
+          Create member
         </Button>
       </div>
       <MembersTable rows={rows} currentUserId={currentUserId} status={status} />

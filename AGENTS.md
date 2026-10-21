@@ -44,7 +44,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Always create Supabase clients through the existing helpers in `utils/supabase/`:
   - `utils/supabase/client` — browser components.
   - `utils/supabase/server` — server components and route handlers.
-  - `utils/supabase/middleware` — inside `middleware.ts`.
+  - `utils/supabase/middleware` — inside `middleware.ts` (Next.js 16 proxy).
+  - `utils/supabase/admin` — service-role client for admin-only operations (creating auth users). Reads `SUPABASE_SERVICE_ROLE_KEY` (server-only, never `NEXT_PUBLIC_`).
 - Never construct ad-hoc `createBrowserClient` / `createServerClient` calls anywhere else.
 - RLS is the authorization layer. Every table gets RLS enabled with policies; never rely on client-side checks, hidden queries, or UI state for security.
 - Never expose the service role key: it must not appear in client code or in any `NEXT_PUBLIC_*` variable.

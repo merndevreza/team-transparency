@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 21-10-2026
+
+### Feat
+
+- Admin-created member accounts: "Create member" opens a form (name, email, role, temporary password with the strength checklist) that provisions the account immediately via the service-role key — the admin shares the credentials out-of-band and the member changes the password from their profile. The signup trigger places admin-created users directly into the admin's company with the chosen role (service-role claim checked), so no stray workspace is founded.
+- New server-only `utils/supabase/admin` client; `SUPABASE_SERVICE_ROLE_KEY` documented in `.env.example` and AGENTS.md. Requires that key to be present in `.env.local` (Dashboard → Settings → API → service_role).
+
 ## [0.2.4] - 21-10-2026
 
 ### Feat
