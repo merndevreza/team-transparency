@@ -2,7 +2,7 @@
 
 import { useEffect, useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { Button, message } from "antd"
+import { App, Button } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
 import type { DotCategory, DotEntry, DotLabel, Profile } from "@/lib/data/types"
 import { useGiveDotStore } from "@/lib/store/giveDotStore"
@@ -33,6 +33,7 @@ export default function DotComposer({
   users,
 }: DotComposerProps) {
   const router = useRouter()
+  const { message } = App.useApp()
   const submit = useGiveDotStore((s) => s.submit)
   const isSubmitted = useGiveDotStore((s) => s.isSubmitted)
   const reset = useGiveDotStore((s) => s.reset)

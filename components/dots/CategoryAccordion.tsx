@@ -53,7 +53,7 @@ export default function CategoryAccordion({
       className={styles.collapse}
       items={items}
       defaultActiveKey={categories[0] ? [categories[0].id] : []}
-      expandIconPosition="end"
+      expandIconPlacement="end"
       ghost
     />
   )
