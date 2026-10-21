@@ -6,8 +6,9 @@ export const metadata: Metadata = {
 }
 
 export default async function LoginPage(props: PageProps<"/login">) {
-  const rawNext = await props.searchParams
-  const next = Array.isArray(rawNext.next) ? rawNext.next[0] : rawNext.next
+  const raw = await props.searchParams
+  const next = Array.isArray(raw.next) ? raw.next[0] : raw.next
+  const errorCode = Array.isArray(raw.error) ? raw.error[0] : raw.error
 
-  return <LoginContent next={next ?? ""} />
+  return <LoginContent next={next ?? ""} errorCode={errorCode ?? ""} />
 }
