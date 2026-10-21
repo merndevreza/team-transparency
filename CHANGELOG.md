@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 21-10-2026
+
+### Feat
+
+- Member invites that actually join the workspace: an `invites` table with tokens; the signup trigger now joins valid invite tokens into the inviting company (with the invited role), consumes the invite, and notifies admins — falling back to a fresh company for invalid tokens. `inviteMember` issues tokens (upsert per email) and the register page validates them with a "Join <company>" banner, hiding the company field.
+- Role-based navigation: members no longer see Dashboard/Manage Members/Manage Dots in the sidebar.
+- Verified live end to end: registered a company through the real UI → session, dashboard, and the 10 seeded taxonomy categories all confirmed against Supabase.
+
+## [0.2.3] - 21-10-2026
+
+### Feat
+
+- Server-side read layer (`lib/data/`) mirroring the demo selectors; all read surfaces (feeds, summaries, directory, dashboard, composer lookups) render from live Supabase data via props.
+- Member and taxonomy management mutations: role/status updates, deletion with self-protection, invite links, and full category/label CRUD through server actions; the seeded members/taxonomy stores were removed in favor of props + revalidation.
+
 ## [0.2.2] - 21-10-2026
 
 ### Feat
