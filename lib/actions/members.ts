@@ -63,9 +63,9 @@ export const removeMember = async (memberId: string): Promise<MemberResult> => {
 }
 
 // Admin directly creates the account with a temporary password (shared
-// out-of-band). Uses the service-role client; the signup trigger places the
-// user into the admin's company thanks to the join_company_id metadata +
-// service_role claim check.
+// out-of-band). Uses the service-role client: createUser first (the signup
+// trigger founders a throwaway workspace for every new auth user), then the
+// account is moved into the admin's company with the chosen role.
 export const createMember = async (input: {
   name: string
   email: string
@@ -109,24 +109,42 @@ export const createMember = async (input: {
     }
   }
 
-  const { error: createError } = await adminClient.auth.admin.createUser({
-    email,
-    password: input.temporaryPassword,
-    email_confirm: true,
-    user_metadata: {
-      full_name: name,
-      join_company_id: admin.company_id,
-      join_role: input.role,
-    },
-  })
-  if (createError) {
+  const { data: created, error: createError } =
+    await adminClient.auth.admin.createUser({
+      email,
+      password: input.temporaryPassword,
+      email_confirm: true,
+      user_metadata: { full_name: name },
+    })
+  if (createError || !created.user) {
     return {
       error:
-        createError.message === "User already registered"
+        createError?.message === "User already registered"
           ? "Someone with this email already exists"
-          : createError.message,
+          : (createError?.message ?? "The account could not be created"),
     }
   }
+
+  // Move the account: drop the trigger-founded workspace (cascades its stray
+  // profile and taxonomy) and create the real profile in the admin's company.
+  const { data: stray } = await adminClient
+    .from("profiles")
+    .select("company_id")
+    .eq("id", created.user.id)
+    .single()
+  if (stray) {
+    await adminClient.from("companies").delete().eq("id", stray.company_id)
+  }
+
+  const { error: profileError } = await adminClient.from("profiles").insert({
+    id: created.user.id,
+    company_id: admin.company_id,
+    full_name: name,
+    email,
+    role: input.role,
+    status: "active",
+  })
+  if (profileError) return { error: profileError.message }
 
   revalidatePath("/", "layout")
   return {}

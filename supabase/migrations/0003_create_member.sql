@@ -1,9 +1,12 @@
 -- ============================================================================
 -- Team Transparency — admin-created members
--- Lets a service-role user creation (admin "Create member" flow) place the
--- new account directly into an existing company with a chosen role, instead
--- of the default "every signup founds a new company" behavior.
--- Apply via Dashboard SQL Editor after 0002_invites.sql.
+-- No schema change: admin "Create member" creates the auth user via the
+-- service-role client and then MOVES the account into the admin's company
+-- app-side (the signup trigger always founds a workspace first, and GoTrue
+-- inserts carry no JWT claims that would let the trigger distinguish admin
+-- creations from self-signups).
+-- This file restores the 0002 trigger verbatim — re-run it if you applied an
+-- earlier draft of 0003 that added the JWT-claims branch.
 -- ============================================================================
 
 create or replace function private.handle_new_user()
@@ -14,29 +17,7 @@ declare
   v_role text;
   v_invite_id uuid;
   v_invite_token uuid;
-  v_join_company_id uuid;
-  v_caller_role text;
 begin
-  -- Service-role creations (admin "Create member") may target an existing
-  -- company. The caller must carry the service_role JWT claim — regular
-  -- signups can never set this path because their claims say "authenticated".
-  v_join_company_id := nullif(new.raw_user_meta_data->>'join_company_id', '')::uuid;
-  v_caller_role := current_setting('request.jwt.claims', true)::json->>'role';
-
-  if v_join_company_id is not null and v_caller_role = 'service_role' then
-    insert into public.profiles (id, company_id, full_name, email, role, status, last_login_at)
-    values (
-      new.id,
-      v_join_company_id,
-      coalesce(nullif(new.raw_user_meta_data->>'full_name', ''), ''),
-      new.email,
-      coalesce(nullif(new.raw_user_meta_data->>'join_role', ''), 'member'),
-      'active',
-      now()
-    );
-    return new;
-  end if;
-
   v_invite_token := nullif(new.raw_user_meta_data->>'invite_token', '')::uuid;
 
   if v_invite_token is not null then
