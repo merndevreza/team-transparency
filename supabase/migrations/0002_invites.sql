@@ -206,5 +206,3 @@ drop trigger if exists on_member_joined on public.profiles;
 create trigger on_member_joined
   after insert on public.profiles
   for each row execute function private.handle_member_joined();
-EOF
-echo written
