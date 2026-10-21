@@ -49,7 +49,7 @@ export default function RegisterContent({
         <Alert
           type="warning"
           showIcon
-          message="That invite link has expired or was already used — you can still register a new company."
+          title="That invite link has expired or was already used — you can still register a new company."
           className={styles.alert}
         />
       )}

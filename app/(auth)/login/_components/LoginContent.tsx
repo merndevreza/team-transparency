@@ -35,7 +35,7 @@ export default function LoginContent({ next, errorCode }: LoginContentProps) {
         <Alert
           type="warning"
           showIcon
-          message={ERROR_MESSAGES[errorCode]}
+          title={ERROR_MESSAGES[errorCode]}
           className={styles.alert}
         />
       )}
